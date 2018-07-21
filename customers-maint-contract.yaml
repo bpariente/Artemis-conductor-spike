@@ -1,0 +1,2751 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: 'BAWAG MSA Customer Maintenance REST API'
+  description: |
+    ## `DRAFT VERSION !!!`
+    
+    This endpoint returns the transactions for a deposit account.
+    
+    The returned transactions will be sorted descending by booking date.
+    
+    The first version of the Bawag MSA API is an exciting step forward towards
+    making transaction data accessible.
+    
+    So we try hard to build something great!
+    
+    All endpoints are only accessible via https and are located at https://api.bawagpsk.com. 
+    For instance you can grab the records by accessing the following URL (which is not final and won't work because we are currently building it): 
+    
+    ```
+      GET https://api.bawagpsk.com/customers-maint/v1/customers
+    ```
+
+    ## Missing things
+    - Final header definitions
+    
+    ## Request headers we got so far (this list is subject to change):
+    - PreferredBackend('x-bawagpsk-preferred-backend')
+    - Language('x-bawagpsk-language', 'LANGUAGE')
+    - Location('x-bawagpsk-location')
+    - LocationDetail('x-bawagpsk-location-detail')
+    - BusinessChannel('x-bawagpsk-business-channel')
+    - BusinessSubChannel('x-bawagpsk-business-sub-channel')
+    - BankIdentification('x-bawagpsk-bank-identification')
+    - SessionId('x-bawagpsk-session-id')
+    - RequestId('x-bawagpsk-request-id')
+    - ClientTimestamp('x-bawagpsk-client-timestamp')
+    - ClientOS('x-bawagpsk-client-os', 'CLIENT_OS'),
+    - CorrelationId('x-bawagpsk-correlation-id', 'CORRELATION_ID'),
+    - GeospatialLocation('x-bawagpsk-geospatial-location', 'GEOSPATIAL_LOCATION')
+    - Authorization('Authorization', 'AUTHORIZATION')
+    - AppId('x-bawagpsk-app-id', 'APP_ID'),
+    - AppName('x-bawagpsk-app-name', 'APP_NAME'),
+    - VendorId('x-bawagpsk-vendor-id', 'X_VENDOR_ID'),
+    - TestCaseId('x-bawagpsk-testcase-id'),
+    - ChannelSourceName('bawagpsk-channel-source-name')
+    - ChannelSourceVersion('bawagpsk-channel-source-version')
+    - ForwardFor('x-forward-for', 'X_FORWARD_FOR'),
+    - UserAgent('user-agent', 'USER_AGENT'),
+    - AuthenticationType('authentication-type', 'AUTHENTICATION_TYPE')
+    - AuthenticationValue('authentication-value', 'AUTHENTICATION_VALUE')
+    - AuthenticationId('authentication-id', 'AUTHENTICATION_ID') 
+    - AuthenticationIdType('authentication-id-type', 'AUTHENTICATION_ID_TYPE')
+
+    ## Response headers we got so far (this list is subject to change):
+    - HTTP_HEADER_ERRORS = 'x-bawagpsk-errors'
+    - HTTP_HEADER_WARNINGS = 'x-bawagpsk-warnings'
+    - HTTP_HEADER_INFOS = 'x-bawagpsk-infos'
+    
+    ## Structure
+
+    ### The Envelope
+    Every response is contained by an envelope. That is, each response has a
+    predictable set of keys with which you can expect to interact
+    
+################################################################################
+#                  Host, Base Path, Schemes and Content Types                  #
+################################################################################
+host: api.bawagpsk.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /customers-maint/v1
+produces:
+  - application/json
+
+################################################################################
+#                                   Parameters[path]                           #
+################################################################################
+parameters:
+  customerEntity:
+    name: customerEntity
+    in: path
+    description: 'Entity of the Customer'
+    type: string
+    required: true
+    maxLength: 4
+  customerNumber:
+    name: customerNumber
+    in: path
+    description: 'Customer Number'
+    type: string
+    required: true
+    maxLength: 8
+  relationType:
+    name: relationType
+    in: path
+    description: 'Customer External Relationship Type'
+    type: string
+    required: true
+    maxLength: 10  
+  accountNumber:
+    name: accountNumber
+    in: query
+    description: 'Account Number'
+    required: false
+    type: string
+  bankCode:
+    name: bankCode
+    in: query
+    description: 'Bank Code'
+    required: false
+    type: string
+  yyWorkflowProcess:
+    name: YYWorkflowProcess
+    in: query
+    description: 'Workflow Process'
+    required: false
+    type: string
+  promotionCode:
+    name: promotionCode
+    in: path
+    description: 'Promotion Code'
+    required: true
+    type: string
+  iban:
+    name: iban
+    in: query
+    description: 'IBAN'
+    required: false
+    type: string  
+################################################################################
+#                                           Paths                              #
+################################################################################ 
+paths:
+  /customers/:
+    post:
+      operationId: createCustomerBasicData
+      tags: 
+        - CustomerBasicData
+      summary: 'Create Customer Basic Data'
+      description: 'Creates a Customer Basic Data; Calls P011'
+      consumes:
+        - application/json
+      parameters:
+        - name: wsRequest
+          in: body
+          description: 'Create Customer Basic Data Request'
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCustomerBasicDataRequest'
+      responses:
+          200:
+            description: Empty response when successful creation
+            schema:
+              $ref: '#/definitions/CreateCustomerBasicDataResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Customer Basic Data is not updated'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'  
+
+  /customers/legal:
+    post:
+      operationId: createLegalEntity
+      tags: 
+        - CustomerBasicData
+      summary: 'Create Customer Basic Data for legal entity'
+      description: 'Creates a Customer Basic Data; Calls P011'
+      consumes:
+        - application/json
+      parameters:
+        - name: wsRequest
+          in: body
+          description: 'Create Customer Basic Data Request'
+          required: true
+          schema:
+            $ref: '#/definitions/CreateLegalEntityRequest'
+      responses:
+          200:
+            description: Empty response when successful creation
+            schema:
+              $ref: '#/definitions/CreateLegalEntityResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Customer Basic Data is not updated'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+            
+  /customers/{customerEntity}-{customerNumber}:
+    get:
+      operationId: getCustomerBasicData
+      tags: 
+        - CustomerBasicData
+      summary: 'Retrieve Customer Basic Data'
+      description: 'Returns Customer Basic Data; Calls P011'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+      responses:
+          200:
+            description: 'Retrieved Customer Basic Data based on the given request'
+            schema:
+              $ref: '#/definitions/GetCustomerBasicDataResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Basic Data not found'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+
+    patch:
+      operationId: updateCustomerBasicData
+      tags: 
+        - CustomerBasicData
+      summary: 'Update Customer Basic Data'
+      description: 'Updates the Customer Basic Data; Calls P011'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Customer Basic Data'
+          required: false
+          schema:
+            $ref: '#/definitions/UpdateCustomerBasicDataRequest'
+      responses:
+          200:
+            description: 'Customer Basic Data Updated Successfully!'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Customer Basic Data is not updated'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+
+  /customers/{customerEntity}-{customerNumber}/additionaldata:
+    get:
+      operationId: getCustomerAdditionalData
+      tags: 
+        - CustomerAdditionalData
+      summary: 'Retrieve Customer Additional Data'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+      responses:
+          200:
+            description: 'Retrieved Customer Addional Data like KOKU number, etc.'
+            schema:
+              $ref: '#/definitions/GetCustomerAdditionalDataResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Additional Data not found. Probably customer does not exixt.'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+  /customers:
+    get:
+      operationId: findCustomers
+      tags: 
+        - FindCustomers
+      summary: 'Find Customers'
+      description: 'Facilitates Customer Information Retrieval; Calls P027'
+      parameters:
+        - name: name
+          in: query
+          description: 'Customer Surname'
+          required: true
+          type: string
+        - name: firstName
+          in: query
+          description: 'Customer First Name'
+          required: false
+          type: string
+        - name: birthDate
+          in: query
+          description: 'Customer Birthdate'
+          required: false
+          type: string
+          format: date
+        - name: registerNumber
+          in: query
+          description: 'Customer Register Number'
+          required: false
+          type: string
+        - name: phoneticSearch
+          in: query
+          description: 'Phonetic search flag'
+          required: false
+          type: boolean
+        - name: postalCode
+          in: query
+          description: 'Postal Code'
+          required: false
+          type: string
+        - name: street
+          in: query
+          description: 'Street'
+          required: false
+          type: string
+        - name: oenbId
+          in: query
+          description: 'OeNB Identification number'
+          required: false
+          type: string
+        - name: maxHostCalls
+          in: query
+          description: '1 Hostcall resembles 50 returned results'
+          required: false
+          type: integer
+          format: int32
+      responses:
+          200:
+            description: 'Contains the list of Customer Short Infos.'
+            schema:
+              $ref: '#/definitions/SearchCustomerDataResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Account not found'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+
+  /customers/{customerEntity}-{customerNumber}/householdcalculation:
+    get:
+      operationId: 'getCustomerHouseholdCalculation'
+      tags:
+        - CustomerHouseholdCalculation
+      summary: 'Get Household Calculation'
+      description: 'Retrieve the Customer household calculation data; Calls P051.'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - $ref: '#/parameters/iban'
+        - $ref: '#/parameters/yyWorkflowProcess'
+      responses:
+        200:
+          description: 'Retrieved Customer Household Calculation based on the given request'
+          schema:        
+            $ref: '#/definitions/GetCustomerHouseholdCalculationResponse'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Household calculation not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+    put:
+      operationId: 'updateCustomerHouseholdCalculation'
+      tags:
+        - CustomerHouseholdCalculation
+      summary: 'Update Customer Household Calculation Data'
+      description: 'Updates the Customer household calculation data; Calls P051.'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Update Household Calculation Request'
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateCustomerHouseholdCalculationRequest'
+      responses:
+        200:
+          description: 'Household Calculation Updated Successfully!'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+  /customers/{customerEntity}-{customerNumber}/contacts:
+    get:
+      operationId: 'getCustomerContactData'
+      tags:
+        - CustomerContactData
+      summary: 'Get Customer Contact Data List'
+      description: 'Reads list of customer contact-data.'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: contactNumber
+          in: query
+          required: false
+          type: integer
+          format: int32
+        - name: isActiveOnly
+          in: query
+          required: false
+          type: boolean
+        - name: isLatestOnly
+          in: query
+          required: false
+          type: boolean
+        - name: includeHidden
+          in: query
+          required: false
+          type: boolean
+      responses:
+        200:
+          description: 'Get Customer Contact Data Response (might be empty)'
+          schema:
+            $ref: '#/definitions/GetCustomerContactDataResponse'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+    put:
+      operationId: 'updateCustomerContactData'
+      tags:
+        - CustomerContactData
+      summary: 'Update Person Contact Data Request'
+      description: 'Updates a persons contact-data.'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Update Person Contact Data Request'
+          required: true
+          schema:      
+            $ref: '#/definitions/UpdateCustomerContactDataRequest' 
+      responses:
+        204:
+          description: 'Customer Contact Data Updated Successfully!'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+    post:
+      operationId: 'createCustomerContactData'
+      tags:
+        - CustomerContactData
+      summary: 'Create Person Contact Data Request'
+      description: 'Creates a customer contact-data.'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Create Person Contact Data Request'
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCustomerContactDataRequest' 
+      responses:
+        200:
+          description: 'Create Customer Contact Data Response'
+          schema:
+            $ref: '#/definitions/CreateCustomerContactDataResponse'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+  /customers/{customerEntity}-{customerNumber}/economicenvironment:
+    get:
+      operationId: 'getCustomerEconomicEnvironment'
+      tags:
+        - CustomerEconomicEnvironment
+      summary: 'Get Person Economic Environment'
+      description: 'Retrieves the data related to Economic Environment.'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'  
+        - $ref: '#/parameters/iban'
+        - $ref: '#/parameters/yyWorkflowProcess'
+      responses:
+        200:
+          description: 'Get Person Economic Environment Response (might be empty)'
+          schema:
+            $ref: '#/definitions/GetCustomerEconomicEnvironmentResponse'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+    put:
+      operationId: 'updateCustomerEconomicEnvironment'
+      tags:
+        - CustomerEconomicEnvironment
+      summary: 'Update Person Economic Environment.'
+      description: 'Updates economic environment data of a person.'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Update Person Economic Environment Request'
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateCustomerEconomicEnvironmentRequest' 
+      responses:
+        200:
+          description: 'Person Economic Environment Updated Successfully!'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+    post:
+      operationId: 'createCustomerEconomicEnvironment'
+      tags:
+        - CustomerEconomicEnvironment
+      summary: 'Create Person Economic Environment.'
+      description: 'Creates economic environment data of a person.'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Create Person Economic Environment Request'
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateCustomerEconomicEnvironmentRequest'
+      responses:
+        200:
+          description: 'Person Economic Environment Created Successfully!'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+  /customers/{customerEntity}-{customerNumber}/promotioncode:
+    put:
+      operationId: 'CreatePromotionCodeReservation'
+      tags:
+        - CustomerReservePromotionCode
+      summary: 'Create Promotion Code Reservation'
+      description: 'Create Promotion Code Reservation.'
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: wsRequest
+          in: body
+          description: 'Create Promotion Code Reservation Request'
+          required: true
+          schema:      
+            $ref: '#/definitions/CreatePromotionCodeReservationRequest' 
+      responses:
+        200:
+          description: 'Customer Promotion Code Created Successfully!'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Customer Account not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+  /customers/promotions/{customerEntity}-{promotionCode}:
+    get:
+      operationId: getCustomerPromotionCodes
+      tags: 
+        - CustomerPromotionCodes
+      summary: 'Retrieve Customer Promotions'
+      description: 'Faciliates Customer Promotions Retrieval; Calls P127'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/promotionCode'
+      responses:
+          200:
+            description: 'Retrieves list of found promotions for the given code, or empty if none found'
+            schema:
+              $ref: '#/definitions/GetCustomerPromotionCodesResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Customer Promotion Data not found'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+            
+  /customers/{customerEntity}-{customerNumber}/externalrelations/{relationType}:
+    get:
+      operationId: getCustomerExternalRelationshipType
+      tags: 
+        - CustomerExternalRelationshipType
+      summary: 'Retrieve Customer External Relationship Type'
+      description: 'Faciliates Customer External Relationship Type from MSA database'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - $ref: '#/parameters/relationType'
+      responses:
+          200:
+            description: 'Retrieves list of found relation types for the given customer code, or empty if none found'
+            schema:
+              $ref: '#/definitions/GetCustomerExternalRelationTypeResponse'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Customer Promotion Data not found'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+
+  /customers/{customerEntity}-{customerNumber}/accounts/{iban}:
+    head:
+      operationId: 'checkAccountCustomerRelation'
+      tags:
+        - AccountCustomerRelation
+      summary: 'Checks if the provided customer holds or can sign the given account'
+      description: 'Retrieves ok if the customer holds or can sign the given account'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+        - name: iban
+          in: path
+          description: 'IBAN of the account to check'
+          required: true
+          type: string
+      responses:
+          200:
+            description: 'Customer holds or can sign the given account'
+          400:
+            description: 'Application error - Verify the BAWAG specific headers for detailed information'
+          404:
+            description: 'Customer account not found or customer does not hold the account'
+          500:
+            description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+
+definitions:
+
+  GetCustomerExternalRelationTypeResponse:
+    type: object
+    properties:
+      externalId:
+        type: string
+        description: EXTERNAL ID
+        example: 'Testing'
+        
+  EnumProperty:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Enum Code
+      description:
+        type: string
+        description: Enum Description
+        
+  PersonKey:
+    type: object
+    required: 
+      - personNumber
+      - entity
+    properties:
+      personNumber:
+        type: string
+        maxLength: 8
+        description: 'Person Number'
+        example: '00000001'
+      entity:
+        type: string
+        maxLength: 4
+        description: 'Entity'
+        example: '0100'
+  
+  CreatePromotionCodeReservationRequest:
+    type: object
+    required:
+      - promoId
+      - entity
+      - productCode
+    properties:
+      promoId:
+        type: string
+        maxLength: 8
+        description: 'Promocode ID'
+        example: 'FA17AABN'
+      entity:
+        type: string
+        maxLength: 4
+        description: 'Entity'
+        example: '0100'
+      productCode:
+        type: string
+        maxLength: 8
+        description: 'Promocode ID'
+        example: '96'
+      subproductCode:
+        type: string
+        maxLength: 4
+        description: 'Sub Product Code'
+        example: ''       
+        
+  PersonIdentificationDocument:
+    type: object
+    properties:
+      codeType:
+        type: string
+        maxLength: 100
+        description: Type of the document given
+        example: 'A / BEHINDERTENPASS'
+      issuingAuthority:
+        type: string
+        maxLength: 35
+        description: 'Authority which issued the document'
+        example: 'Issuer'
+      issuingAuthorityCountryCode:
+        type: string
+        maxLength: 2
+        description: 'Country of authority which issued the document'
+        example:  'AT'
+      number:
+        type: string
+        maxLength: 35
+        description: 'Register Number/Legitimation data for natural persons'
+        example: 'C'
+      issuingDate:
+        type: string
+        format: date
+        description: 'Date issued'
+        example: '2017-12-12'
+      expirationDate:
+        type: string
+        format: date
+        description: 'Expiry Date'
+        example: '2017-12-12'
+      comment:
+        type: string
+        maxLength: 35
+        description: 'Comment'
+        example: 'C'
+        
+  BranchInformation:
+    type: object
+    properties:
+      branchName:
+        type: string
+        maxLength: 40
+        description: 'Branch Name'
+        example: 'Wein Branch'
+      username:
+        type: string
+        maxLength: 40
+        description: 'Username'
+        example: 'Admin'
+      userTelephoneNumber:
+        type: string
+        maxLength: 15
+        description: 'User Telephone number'
+        example: '+43 12345678'
+      formattedCurrentDate:
+        type: string
+        maxLength: 10
+        description: 'Formatted Current Date'
+        example: '10.10.2017'
+      branchTown:
+        type: string
+        maxLength: 50
+        description: 'Branch Town'
+        example: 'Wein'
+      branchStreet:
+        type: string
+        maxLength: 40
+        description: 'Branch Street'
+        example: 'Street'
+      branchFaxNumber:
+        type: string
+        maxLength: 15
+        description: 'Branch Fax Number'
+        example: '+43 12345'
+      branchBankCode:
+        type: integer
+        format: int32
+        description: 'Branch Bank code'
+        example: '14000'
+      commercialRegisterNumber:
+        type: string
+        maxLength: 8
+        description: 'Commercial Register Number'
+        example: '98765542'
+      dvrNumber:
+        type: integer
+        format: int32
+        description: 'DVR Number'
+        example: '1234567'
+      companyAddress:
+        type: string
+        maxLength: 90
+        description: 'Company Address'
+        example: 'Wein, Austria'
+      companyInternetAddress:
+        type: string
+        maxLength: 50
+        description: 'Company Internet Address'
+        example: 'IP Add'
+      companyMailAddress:
+        type: string
+        maxLength: 50
+        description: 'Company Mail Address'
+        example: '123 Wein'
+      shortCompanyName:
+        type: string
+        maxLength: 20
+        description: 'Short Company Name'
+        example: 'BWG'
+      mediumCompanyName:
+        type: string
+        maxLength: 40
+        description: 'Medium Company Name'
+        example: 'Bawag P.S.K.'
+      companyName1:
+        type: string
+        maxLength: 60
+        description: 'Company Name 1'
+        example: 'Bawag P.S.K. 1'
+      companyName2:
+        type: string
+        maxLength: 60
+        description: 'Company Name 2'
+        example: 'Bawag P.S.K. 2'
+      companyName3:
+        type: string
+        maxLength: 50
+        description: 'Company Name 3'
+        example: 'Bawag P.S.K. 3'
+      companyPostalCode:
+        type: string
+        maxLength: 8
+        description: 'Company Postal Code'
+        example: '12345'
+      companyTelephoneNumber:
+        type: string
+        maxLength: 30
+        description: 'Company Telephone Number'
+        example: '+43 12345'
+      sender:
+        type: string
+        maxLength: 100
+        description: 'Sender'
+        example: 'Sender'
+      companyBrandName:
+        type: string
+        maxLength: 40
+        description: 'Company Brand Name'
+        example: 'BAWAG P.S.K.'
+        
+  ModificationInformation:
+    type: object
+    properties:
+      time:
+        type: string
+        format: date-time
+        description: 'Time of last modification'
+        example: '2017-07-21T17:32:28Z'
+      user:
+        type: string
+        maxLength: 8
+        description: 'User who have modified the data'
+        example: 'TESG234'
+        
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+            
+#  BaseCustomerBasicData:
+#    type: object
+    
+  GetCustomerBasicDataRequest:
+    type: object
+    required:
+      - personKey
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+
+  GetCustomerBasicDataResponse:
+    type: object
+    required:
+      - legalFormCode
+      - naturalPerson
+      - salutation
+      - segment
+      - shortWording
+      - street
+      - taxLiabilityCountryCode
+    properties:
+      accessLevel:
+        type: integer
+        format: int32
+        description: 'Access Level'
+        example: 1
+      additionalName:
+        type: string
+        maxLength: 90
+        description: 'Additional Name'
+        example: 'Sam Smith'
+      additionalText:
+        type: string
+        maxLength: 35
+        description: 'Additional Text'
+        example: 'Text'
+      addressForBlinds:
+        type: boolean
+        description: 'Flag for address for blind'
+        example: false
+      addressOutdated:
+        type: boolean
+        description: 'Flag for address outdated'
+        example: true
+      addressOutdated2:
+        type: boolean
+        description: 'Flag for address outdated 2'
+        example: true
+      advisorKey1:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 1'
+        example: 'Adviser 1'
+      advisorKey2:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 2'
+        example: 'Adviser 2'
+      attentionOf:
+        type: string
+        maxLength: 35
+        description: 'Attention of'
+        example: 'Smith'
+      birthCountry:
+        type: string
+        maxLength: 3
+        description: 'Birth country'
+        example: 'PH/Philippines'
+      birthDate:
+        type: string
+        format: date
+        description: 'Birthdate'
+        example: '2017-01-01'
+      birthPlace:
+        type: string
+        maxLength: 40
+        description: 'Birthplace'
+        example: 'Canada'
+      blockCustomer:
+        type: boolean
+        description: 'Flag for Block Customer'
+        example: false
+      cardName1:
+        type: string
+        maxLength: 26
+        description: 'Card Name 1'
+        example: 'cardName1'
+      cardName2:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2'
+        example: 'cardName2'
+      cardName2Extended:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2 Extended'
+        example: 'cardName2Extended'
+      citizenSince:
+        type: string
+        format: date
+        description: 'Citizen Since'
+        example: '2017-10-26'
+      city:
+        type: string
+        maxLength: 35
+        description: 'City'
+        example: 'Wein'
+      city2:
+        type: string
+        maxLength: 35
+        description: 'City 2'
+        example: 'Paris'
+      country:
+        $ref: '#/definitions/EnumProperty'
+      country2:
+        $ref: '#/definitions/EnumProperty'
+      esvg:
+        $ref: '#/definitions/EnumProperty'
+      firstName:
+        type: string
+        maxLength: 30
+        description: 'First Name'
+        example: 'Sam'
+      flagEmployerProspect:
+        type: boolean
+        description: 'Flag for Employer Prospect'
+        example: false
+      gender:
+        $ref: '#/definitions/EnumProperty'
+      identificationDocument1:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      identificationDocument2:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      language:
+        type: string
+        maxLength: 1
+        description: 'Language Code'
+        example: '0'
+      legalFormCode:
+        type: integer
+        format: int32
+        description: 'Legal Form code'
+        example: 100
+      leiCode:
+        type: string
+        maxLength: 20
+        description: 'LEI Code'
+        example: '51293836123123'
+      mainAddressChangeDate:
+        type: string
+        format: date
+        description: 'Main Address Change Date'
+        example: '2017-01-20'
+      maritalStatus:
+        $ref: '#/definitions/EnumProperty'
+      name:
+        type: string
+        maxLength: 30
+        description: 'Surname'
+        example: 'Smith'
+      nationality:
+        $ref: '#/definitions/EnumProperty'
+      nationality2:
+        $ref: '#/definitions/EnumProperty'
+      naturalPerson:
+        type: boolean
+        description: 'Flag for Natural Person'
+        example: true
+      noAdvertismentType:
+        type: string
+        maxLength: 1
+        description: 'No Advertisment Type'
+        example: 'N'
+      noOENBId:
+        type: boolean
+        description: 'person has no OeNB-Id - only when legal entity (values Y, N, space)'
+        example: true
+      noOENBIdTemporary:
+        type: boolean
+        description: 'No OeNB-Id available - only when legal entity (values Y, N, space)'
+        example: true
+      oenace:
+        $ref: '#/definitions/EnumProperty'
+      oenbId:
+        type: string
+        maxLength: 9
+        description: 'OENB ID'
+        example: '123456789'
+      pep:
+        type: boolean
+        description: 'PEP (values Y, N, space)'
+        example: true
+      pepCode:
+        type: string
+        maxLength: 2
+        description: 'PEP-Code'
+        example: 'PC'
+      pepComment:
+        type: string
+        maxLength: 50
+        description: 'PEP-Comment'
+        example: 'Sample PEP Comment'
+      pepRelative:
+        type: boolean
+        description: 'PEP-Relative (values Y, N, space)'
+        example: true
+      postalCode:
+        type: string
+        maxLength: 6
+        description: 'Postal Code'
+        example: '1010'
+      postalCode2:
+        type: string
+        maxLength: 6
+        description: 'Postal Code2'
+        example: '1010'
+      salutation:
+        $ref: '#/definitions/EnumProperty'
+      segment:
+        $ref: '#/definitions/EnumProperty'
+      seperateCustomer:
+        type: boolean
+        description: 'Seperate Customer'
+        example: true
+      shortWording:
+        type: string
+        maxLength: 35
+        description: 'ShortWording Person name'
+        example: 'Gmgb Company'
+      socialSecurityNumber:
+        type: string
+        maxLength: 10
+        description: 'Social Security Number'
+        example: '0123456789'
+      street:
+        type: string
+        maxLength: 35
+        description: 'Street'
+        example: 'Karlsplatz'
+      street2:
+        type: string
+        maxLength: 35
+        description: 'Street 2'
+        example: 'Herrengasse'
+      taxLiabilityCountryCode:
+        type: string
+        maxLength: 2
+        description: 'Tax Liability Country Code'
+        example: 'AT'
+      title:
+        type: string
+        maxLength: 30
+        description: 'Title'
+        example: 'Mr.'
+      unwantedCustomer:
+        type: boolean
+        description: 'Unwanted Customer Indicator'
+        example: true
+      addressMain:
+        type: string
+        maxLength: 1
+        description: 'Main address flag'
+        example: 'J'
+      address2:
+        type: string
+        maxLength: 120
+        description: 'div. Adressfelder2 (Straße)'
+        example: 'Wall Street'
+      advisorName1:
+        type: string
+        maxLength: 30
+        description: 'advisorName1 (text)'
+        example: 'Franz Hue'
+      advisorName2:
+        type: string
+        maxLength: 30
+        description: 'advisorName2 (text)'
+        example: 'Thomas Young'
+      amlDataAvailability:
+        type: string
+        maxLength: 1
+        description: 'AML information flag'
+        example: 'K'
+      authorizationFlag:
+        type: string
+        maxLength: 1
+        description: 'FLAG TO IDENTITY IF GEBURTSORT IS REQUIRED OR NOT'
+        example: 'J'
+      branchInformation:
+        $ref: '#/definitions/BranchInformation'
+      compressedCity2:
+        type: string
+        maxLength: 100
+        description: 'div. Adressfelder2 (PLZ, Ort, Land, Blind, Adr.aktuell)'
+        example: 'Town Hall'
+      deceased:
+        type: boolean
+        description: 'true if customer is dead'
+        example: true
+      firstEditDate:
+        type: string
+        format: date
+        description: 'Date since the person is a client'
+        example: '2000-12-12'
+      identFlag:
+        type: boolean
+        description: 'Ident Flag'
+        example: true
+      lastModificationInformation:
+        $ref: '#/definitions/ModificationInformation'
+      mifid:
+        $ref: '#/definitions/EnumProperty'
+      stateText:
+        type: string
+        description: 'State Text'
+        example: 'Sample State Text'
+      stateDate:
+        type: string
+        format: date
+        description: 'State Since'
+        example: '2017-01-01'
+      transactionCode:
+        type: string
+        description: 'Transaction being called in Allegro'
+        example: 'P011'
+            
+  UpdateCustomerBasicDataRequest:
+    type: object  
+    properties:
+      accessLevel:
+        type: integer
+        format: int32
+        description: 'Access Level'
+        example: 1
+      additionalName:
+        type: string
+        maxLength: 90
+        description: 'Additional Name'
+        example: 'Sam Smith'
+      additionalText:
+        type: string
+        maxLength: 35
+        description: 'Additional Text'
+        example: 'Text'
+      addressForBlinds:
+        type: boolean
+        description: 'Flag for address for blind'
+        example: false
+      addressOutdated:
+        type: boolean
+        description: 'Flag for address outdated'
+        example: true
+      addressOutdated2:
+        type: boolean
+        description: 'Flag for address outdated 2'
+        example: true
+      advisorKey1:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 1'
+        example: 'Adviser 1'
+      advisorKey2:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 2'
+        example: 'Adviser 2'
+      attentionOf:
+        type: string
+        maxLength: 35
+        description: 'Attention of'
+        example: 'Smith'
+      birthCountry:
+        type: string
+        maxLength: 3
+        description: 'Birth country'
+        example: 'PH/Philippines'
+      birthDate:
+        type: string
+        format: date
+        description: 'Birthdate'
+        example: '2017-01-01'
+      birthPlace:
+        type: string
+        maxLength: 40
+        description: 'Birthplace'
+        example: 'Canada'
+      blockCustomer:
+        type: boolean
+        description: 'Flag for Block Customer'
+        example: false
+      cardName1:
+        type: string
+        maxLength: 26
+        description: 'Card Name 1'
+        example: 'cardName1'
+      cardName2:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2'
+        example: 'cardName2'
+      cardName2Extended:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2 Extended'
+        example: 'cardName2Extended'
+      citizenSince:
+        type: string
+        format: date
+        description: 'Citizen Since'
+        example: '2017-10-26'
+      city:
+        type: string
+        maxLength: 35
+        description: 'City'
+        example: 'Wein'
+      city2:
+        type: string
+        maxLength: 35
+        description: 'City 2'
+        example: 'Paris'
+      country:
+        $ref: '#/definitions/EnumProperty'
+      country2:
+        $ref: '#/definitions/EnumProperty'
+      esvg:
+        $ref: '#/definitions/EnumProperty'
+      firstName:
+        type: string
+        maxLength: 30
+        description: 'First Name'
+        example: 'Sam'
+      flagEmployerProspect:
+        type: boolean
+        description: 'Flag for Employer Prospect'
+        example: false
+      gender:
+        $ref: '#/definitions/EnumProperty'
+      identificationDocument1:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      identificationDocument2:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      language:
+        type: string
+        maxLength: 1
+        description: 'Language Code'
+        example: '0'
+      legalFormCode:
+        type: integer
+        format: int32
+        description: 'Legal Form code'
+        example: 100
+      leiCode:
+        type: string
+        maxLength: 20
+        description: 'LEI Code'
+        example: '51293836123123'
+      mainAddressChangeDate:
+        type: string
+        format: date
+        description: 'Main Address Change Date'
+        example: '2017-01-20'
+      maritalStatus:
+        $ref: '#/definitions/EnumProperty'
+      name:
+        type: string
+        maxLength: 30
+        description: 'Surname'
+        example: 'Smith'
+      nationality:
+        $ref: '#/definitions/EnumProperty'
+      nationality2:
+        $ref: '#/definitions/EnumProperty'
+      naturalPerson:
+        type: boolean
+        description: 'Flag for Natural Person'
+        example: true
+      noAdvertismentType:
+        type: string
+        maxLength: 1
+        description: 'No Advertisment Type'
+        example: 'N'
+      noOENBId:
+        type: boolean
+        description: 'person has no OeNB-Id - only when legal entity (values Y, N, space)'
+        example: true
+      noOENBIdTemporary:
+        type: boolean
+        description: 'No OeNB-Id available - only when legal entity (values Y, N, space)'
+        example: true
+      oenace:
+        $ref: '#/definitions/EnumProperty'
+      oenbId:
+        type: string
+        maxLength: 9
+        description: 'OENB ID'
+        example: '123456789'
+      pep:
+        type: boolean
+        description: 'PEP (values Y, N, space)'
+        example: true
+      pepCode:
+        type: string
+        maxLength: 2
+        description: 'PEP-Code'
+        example: 'PC'
+      pepComment:
+        type: string
+        maxLength: 50
+        description: 'PEP-Comment'
+        example: 'Sample PEP Comment'
+      pepRelative:
+        type: boolean
+        description: 'PEP-Relative (values Y, N, space)'
+        example: true
+      postalCode:
+        type: string
+        maxLength: 6
+        description: 'Postal Code'
+        example: '1010'
+      postalCode2:
+        type: string
+        maxLength: 6
+        description: 'Postal Code2'
+        example: '1010'
+      salutation:
+        $ref: '#/definitions/EnumProperty'
+      segment:
+        $ref: '#/definitions/EnumProperty'
+      seperateCustomer:
+        type: boolean
+        description: 'Seperate Customer'
+        example: true
+      shortWording:
+        type: string
+        maxLength: 35
+        description: 'ShortWording Person name'
+        example: 'Gmgb Company'
+      socialSecurityNumber:
+        type: string
+        maxLength: 10
+        description: 'Social Security Number'
+        example: '0123456789'
+      street:
+        type: string
+        maxLength: 35
+        description: 'Street'
+        example: 'Karlsplatz'
+      street2:
+        type: string
+        maxLength: 35
+        description: 'Street 2'
+        example: 'Herrengasse'
+      taxLiabilityCountryCode:
+        type: string
+        maxLength: 2
+        description: 'Tax Liability Country Code'
+        example: 'AT'
+      title:
+        type: string
+        maxLength: 30
+        description: 'Title'
+        example: 'Mr.'
+      unwantedCustomer:
+        type: boolean
+        description: 'Unwanted Customer Indicator'
+        example: true
+      addressMain:
+        type: string
+        maxLength: 1
+        description: 'Address Main J/N'
+        example: 'J'
+      address2:
+        type: string
+        maxLength: 120
+        description: 'Second Address'
+        example: 'Wein'
+      authorizationFlag:
+        type: boolean
+        description: 'Authorization Flag'
+        example: true
+      compressTown2:
+        type: string
+        maxLength: 100
+        description: 'Compressed Town 2'
+        example: 'Wein'
+      flagNotActual2:
+        type: boolean
+        description: 'Flag not actual'
+        example: false
+      lastModificationInformation:
+        $ref: '#/definitions/ModificationInformation'
+      mifid:
+        $ref: '#/definitions/EnumProperty'
+      personKey:
+        $ref: '#/definitions/PersonKey'
+        
+  CreateCustomerBasicDataRequest:
+    type: object
+    required:
+      - country
+      - entity
+      - firstName
+      - gender
+      - identificationDocument1
+      - language
+      - legalFormCode
+      - name
+      - nationality
+      - oenace
+      - postalCode
+      - salutation
+      - segment
+      - street
+      - shortWording
+    properties:
+      accessLevel:
+        type: integer
+        format: int32
+        description: 'Access Level'
+        example: 1
+      additionalName:
+        type: string
+        maxLength: 90
+        description: 'Additional Name'
+        example: 'Sam Smith'
+      additionalText:
+        type: string
+        maxLength: 35
+        description: 'Additional Text'
+        example: 'Text'
+      addressForBlinds:
+        type: boolean
+        description: 'Flag for address for blind'
+        example: false
+      addressOutdated:
+        type: boolean
+        description: 'Flag for address outdated'
+        example: true
+      addressOutdated2:
+        type: boolean
+        description: 'Flag for address outdated 2'
+        example: true
+      advisorKey1:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 1'
+        example: 'Adviser 1'
+      advisorKey2:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 2'
+        example: 'Adviser 2'
+      attentionOf:
+        type: string
+        maxLength: 35
+        description: 'Attention of'
+        example: 'Smith'
+      birthCountry:
+        type: string
+        maxLength: 3
+        description: 'Birth country'
+        example: 'PH/Philippines'
+      birthDate:
+        type: string
+        format: date
+        description: 'Birthdate'
+        example: '2017-01-01'
+      birthPlace:
+        type: string
+        maxLength: 40
+        description: 'Birthplace'
+        example: 'Canada'
+      blockCustomer:
+        type: boolean
+        description: 'Flag for Block Customer'
+        example: false
+      cardName1:
+        type: string
+        maxLength: 26
+        description: 'Card Name 1'
+        example: 'cardName1'
+      cardName2:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2'
+        example: 'cardName2'
+      cardName2Extended:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2 Extended'
+        example: 'cardName2Extended'
+      citizenSince:
+        type: string
+        format: date
+        description: 'Citizen Since'
+        example: '2017-10-26'
+      city:
+        type: string
+        maxLength: 35
+        description: 'City'
+        example: 'Wein'
+      city2:
+        type: string
+        maxLength: 35
+        description: 'City 2'
+        example: 'Paris'
+      country:
+        $ref: '#/definitions/EnumProperty'
+      country2:
+        $ref: '#/definitions/EnumProperty'
+      esvg:
+        $ref: '#/definitions/EnumProperty'
+      firstName:
+        type: string
+        maxLength: 30
+        description: 'First Name'
+        example: 'Sam'
+      flagEmployerProspect:
+        type: boolean
+        description: 'Flag for Employer Prospect'
+        example: false
+      gender:
+        $ref: '#/definitions/EnumProperty'
+      identificationDocument1:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      identificationDocument2:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      language:
+        type: string
+        maxLength: 1
+        description: 'Language Code'
+        example: '0'
+      legalFormCode:
+        type: integer
+        format: int32
+        description: 'Legal Form code'
+        example: 100
+      leiCode:
+        type: string
+        maxLength: 20
+        description: 'LEI Code'
+        example: '51293836123123'
+      mainAddressChangeDate:
+        type: string
+        format: date
+        description: 'Main Address Change Date'
+        example: '2017-01-20'
+      maritalStatus:
+        $ref: '#/definitions/EnumProperty'
+      name:
+        type: string
+        maxLength: 30
+        description: 'Surname'
+        example: 'Smith'
+      nationality:
+        $ref: '#/definitions/EnumProperty'
+      nationality2:
+        $ref: '#/definitions/EnumProperty'
+      #naturalPerson:
+      #  type: boolean
+      #  description: 'Flag for Natural Person'
+      #  example: true
+      noAdvertismentType:
+        type: string
+        maxLength: 1
+        description: 'No Advertisment Type'
+        example: 'N'
+      noOENBId:
+        type: boolean
+        description: 'person has no OeNB-Id - only when legal entity (values Y, N, space)'
+        example: true
+      noOENBIdTemporary:
+        type: boolean
+        description: 'No OeNB-Id available - only when legal entity (values Y, N, space)'
+        example: true
+      oenace:
+        $ref: '#/definitions/EnumProperty'
+      oenbId:
+        type: string
+        maxLength: 9
+        description: 'OENB ID'
+        example: '123456789'
+      pep:
+        type: boolean
+        description: 'PEP (values Y, N, space)'
+        example: true
+      pepCode:
+        type: string
+        maxLength: 2
+        description: 'PEP-Code'
+        example: 'PC'
+      pepComment:
+        type: string
+        maxLength: 50
+        description: 'PEP-Comment'
+        example: 'Sample PEP Comment'
+      pepRelative:
+        type: boolean
+        description: 'PEP-Relative (values Y, N, space)'
+        example: true
+      postalCode:
+        type: string
+        maxLength: 6
+        description: 'Postal Code'
+        example: '1010'
+      postalCode2:
+        type: string
+        maxLength: 6
+        description: 'Postal Code2'
+        example: '1010'
+      salutation:
+        $ref: '#/definitions/EnumProperty'
+      segment:
+        $ref: '#/definitions/EnumProperty'
+      seperateCustomer:
+        type: boolean
+        description: 'Seperate Customer'
+        example: true
+      shortWording:
+        type: string
+        maxLength: 35
+        description: 'ShortWording Person name'
+        example: 'Gmgb Company'
+      socialSecurityNumber:
+        type: string
+        maxLength: 10
+        description: 'Social Security Number'
+        example: '0123456789'
+      street:
+        type: string
+        maxLength: 35
+        description: 'Street'
+        example: 'Karlsplatz'
+      street2:
+        type: string
+        maxLength: 35
+        description: 'Street 2'
+        example: 'Herrengasse'
+      taxLiabilityCountryCode:
+        type: string
+        maxLength: 2
+        description: 'Tax Liability Country Code'
+        example: 'AT'
+      title:
+        type: string
+        maxLength: 30
+        description: 'Title'
+        example: 'Mr.'
+      unwantedCustomer:
+        type: boolean
+        description: 'Unwanted Customer Indicator'
+        example: true
+      entity:
+        type: string
+        maxLength: 4
+        description: 'Customer Entity'
+        example: '0100'
+      mainAddressFlag:
+        type: string
+        maxLength: 1
+        description: 'Flag for Main Address'
+        example: 'Y/N'
+            
+  CreateCustomerBasicDataResponse:
+    type: object
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+
+
+  CreateLegalEntityRequest:
+    type: object
+    required:
+      - country
+      - language
+      - legalFormCode
+      - name
+      - oenace
+      - postalCode   
+      - street
+      - nationality
+      - shortWording
+      - taxLiabilityCountryCode
+      - entity
+      - mainAddressFlag
+    properties:
+      accessLevel:
+        type: integer
+        format: int32
+        description: 'Access Level'
+        example: 1
+      additionalName:
+        type: string
+        maxLength: 90
+        description: 'Additional Name'
+        example: 'Sam Smith'
+      additionalText:
+        type: string
+        maxLength: 35
+        description: 'Additional Text'
+        example: 'Text'
+      addressForBlinds:
+        type: boolean
+        description: 'Flag for address for blind'
+        example: false
+      addressOutdated:
+        type: boolean
+        description: 'Flag for address outdated'
+        example: true
+      addressOutdated2:
+        type: boolean
+        description: 'Flag for address outdated 2'
+        example: true
+      advisorKey1:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 1'
+        example: 'Adviser 1'
+      advisorKey2:
+        type: string
+        maxLength: 19
+        description: 'Advisor Key 2'
+        example: 'Adviser 2'
+      attentionOf:
+        type: string
+        maxLength: 35
+        description: 'Attention of'
+        example: 'Smith'
+      #birthCountry:
+      #  type: string
+      #  maxLength: 3
+      #  description: 'Birth country'
+      #  example: 'PH/Philippines'
+      #birthDate:
+      #  type: string
+      #  format: date
+      #  description: 'Birthdate'
+      #  example: '2017-01-01'
+      #birthPlace:
+      #  type: string
+      #  maxLength: 40
+      #  description: 'Birthplace'
+      #  example: 'Canada'
+      blockCustomer:
+        type: boolean
+        description: 'Flag for Block Customer'
+        example: false
+      cardName1:
+        type: string
+        maxLength: 26
+        description: 'Card Name 1'
+        example: 'cardName1'
+      cardName2:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2'
+        example: 'cardName2'
+      cardName2Extended:
+        type: string
+        maxLength: 26
+        description: 'Card Name 2 Extended'
+        example: 'cardName2Extended'
+      citizenSince:
+        type: string
+        format: date
+        description: 'Citizen Since'
+        example: '2017-10-26'
+      city:
+        type: string
+        maxLength: 35
+        description: 'City'
+        example: 'Wein'
+      city2:
+        type: string
+        maxLength: 35
+        description: 'City 2'
+        example: 'Paris'
+      country:
+        $ref: '#/definitions/EnumProperty'
+      country2:
+        $ref: '#/definitions/EnumProperty'
+      esvg:
+        $ref: '#/definitions/EnumProperty'
+      firstName:
+        type: string
+        maxLength: 30
+        description: 'First Name'
+        example: 'Sam'
+      flagEmployerProspect:
+        type: boolean
+        description: 'Flag for Employer Prospect'
+        example: false
+      #gender:
+      #  $ref: '#/definitions/EnumProperty'
+      identificationDocument1:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      identificationDocument2:
+        $ref: '#/definitions/PersonIdentificationDocument'
+      language:
+        type: string
+        maxLength: 1
+        description: 'Language Code'
+        example: '0'
+      legalFormCode:
+        type: integer
+        format: int32
+        description: 'Legal Form code'
+        example: 100
+      leiCode:
+        type: string
+        maxLength: 20
+        description: 'LEI Code'
+        example: '51293836123123'
+      mainAddressChangeDate:
+        type: string
+        format: date
+        description: 'Main Address Change Date'
+        example: '2017-01-20'
+      #maritalStatus:
+      #  $ref: '#/definitions/EnumProperty'
+      name:
+        type: string
+        maxLength: 30
+        description: 'Surname'
+        example: 'Smith'
+      nationality:
+        $ref: '#/definitions/EnumProperty'
+      nationality2:
+        $ref: '#/definitions/EnumProperty'
+      #naturalPerson:
+      #  type: boolean
+      #  description: 'Flag for Natural Person'
+      #  example: true
+      noAdvertismentType:
+        type: string
+        maxLength: 1
+        description: 'No Advertisment Type'
+        example: 'N'
+      noOENBId:
+        type: boolean
+        description: 'person has no OeNB-Id - only when legal entity (values Y, N, space)'
+        example: true
+      noOENBIdTemporary:
+        type: boolean
+        description: 'No OeNB-Id available - only when legal entity (values Y, N, space)'
+        example: true
+      oenace:
+        $ref: '#/definitions/EnumProperty'
+      oenbId:
+        type: string
+        maxLength: 9
+        description: 'OENB ID'
+        example: '123456789'
+      pep:
+        type: boolean
+        description: 'PEP (values Y, N, space)'
+        example: true
+      pepCode:
+        type: string
+        maxLength: 2
+        description: 'PEP-Code'
+        example: 'PC'
+      pepComment:
+        type: string
+        maxLength: 50
+        description: 'PEP-Comment'
+        example: 'Sample PEP Comment'
+      pepRelative:
+        type: boolean
+        description: 'PEP-Relative (values Y, N, space)'
+        example: true
+      postalCode:
+        type: string
+        maxLength: 6
+        description: 'Postal Code'
+        example: '1010'
+      postalCode2:
+        type: string
+        maxLength: 6
+        description: 'Postal Code2'
+        example: '1010'
+      #salutation:
+      #  $ref: '#/definitions/EnumProperty'
+      #segment:
+      #  $ref: '#/definitions/EnumProperty'
+      seperateCustomer:
+        type: boolean
+        description: 'Seperate Customer'
+        example: true
+      shortWording:
+        type: string
+        maxLength: 35
+        description: 'ShortWording Person name'
+        example: 'Gmgb Company'
+      #socialSecurityNumber:
+      #  type: string
+      #  maxLength: 10
+      #  description: 'Social Security Number'
+      #  example: '0123456789'
+      street:
+        type: string
+        maxLength: 35
+        description: 'Street'
+        example: 'Karlsplatz'
+      street2:
+        type: string
+        maxLength: 35
+        description: 'Street 2'
+        example: 'Herrengasse'
+      taxLiabilityCountryCode:
+        type: string
+        maxLength: 2
+        description: 'Tax Liability Country Code'
+        example: 'AT'
+      #title:
+      #  type: string
+      #  maxLength: 30
+      #  description: 'Title'
+      #  example: 'Mr.'
+      unwantedCustomer:
+        type: boolean
+        description: 'Unwanted Customer Indicator'
+        example: true
+      entity:
+        type: string
+        maxLength: 4
+        description: 'Customer Entity'
+        example: '0100'
+      mainAddressFlag:
+        type: string
+        maxLength: 1
+        description: 'Flag for Main Address'
+        example: 'Y/N'
+
+  CreateLegalEntityResponse:
+    type: object
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+
+  BaseContactData:
+    type: object
+    required:
+      - personContact
+    discriminator: subType
+    properties:
+      personContact:
+        $ref: '#/definitions/PersonContact'
+        
+  GetCustomerAdditionalDataResponse:
+    type: object
+    properties:
+      bookkeepingTypeCode:
+        type: integer
+        format: int32
+      distributionPartner:
+        type: boolean
+      employee:
+        type: boolean
+      riskManager:
+        type: string
+        maxLength: 19
+      bankCode:
+        type: string
+        maxLength: 5
+      financeAuthority:
+        type: string
+        maxLength: 20
+      taxNumber:
+        type: string
+        maxLength: 26
+      legalSelfEmployed:
+        type: boolean
+      customerFlagCode:
+        type: string
+        maxLength: 1
+      capitalGainTax:
+        type: boolean
+      economicTask:
+        type: boolean
+      projectFinancingCode:
+        type: string
+        maxLength: 1
+      emitterKey:
+        type: string
+        maxLength: 16
+      balanceSettlementMonth:
+        type: string
+        maxLength: 2
+      kokuNumber:
+        type: string
+        maxLength: 17
+        description: 'Enterprise customer number'
+      customerType:
+        type: string
+        maxLength: 1
+      uidNumber:
+        type: string
+        maxLength: 14
+      lastReviewDate:
+        type: string
+        format: date
+        example: '2013-02-03'
+      economicDocumentsObtainingDate:
+        type: string
+        format: date
+        example: '2013-02-03'
+
+  GetCustomerContactDataRequest:
+    type: object
+    properties:
+      contactNumber:
+        type: integer
+        format: int32
+        description: 'Used to filter the result of contacts to only one.'
+        example: 1
+      activeOnly:
+        type: boolean
+        description: 'Used to filter the active contacts only.'
+        example: true
+      latestOnly:
+        type: boolean
+        description: 'Used to filter the latest contact only.'
+        example: true
+      includeHidden:
+        type: boolean
+        description: 'Used to add the hidden contacts of the customer.'
+        example: true
+        
+  GetCustomerContactDataResponse:
+    type: object
+    properties:
+      personContacts:
+        type: array
+        items:
+          $ref: '#/definitions/PersonContact'
+          
+  UpdateCustomerContactDataRequest:
+    allOf:
+      - $ref: '#/definitions/BaseContactData'
+      - type: object
+      
+  CreateCustomerContactDataRequest:
+    allOf:
+      - $ref: '#/definitions/BaseContactData'
+      - type: object
+      
+  CreateCustomerContactDataResponse:
+    type: object
+    properties:
+      personContact:
+        $ref: '#/definitions/PersonContact'
+    
+  PersonContact:
+    type: object
+    properties:
+      personCode:
+        type: string
+        maxLength: 39
+        description: 'CUSTOMER CODE'
+        example: '12345'
+      addressNumber:
+        type: integer
+        maxLength: 3
+        description: 'PERSON CONTACT TYPE IDENTIFICATION NUMBER'
+        example: '005'
+      contact:
+        $ref: '#/definitions/EnumProperty'
+      city:
+        type: string
+        maxLength: 35
+        description: 'CITY DESCRIPTION'
+        example: 'Lipa'
+      country:
+        $ref: '#/definitions/EnumProperty'
+      postalCode:
+        type: string
+        maxLength: 6
+        description: 'ZIP CODE'
+        example: '1080'
+      streetNameNumber:
+        type: string
+        maxLength: 35
+        description: 'TEXT FOR STREET'
+        example: 'Elm Street'        
+      careOfText:
+        type: string
+        maxLength: 35
+        description: 'ATTENTION PART ADDR'
+        example: 'Text'
+      addressForBlind:
+        type: boolean
+        maxLength: 1
+        description: 'BRAILLE PRINTING FLG'
+        example: 'T'
+      contactActual:
+        type: boolean
+        maxLength: 1
+        description: 'ADDRESS ACTUAL FLAG'
+        example: 'T'
+      internalContactCode:
+        type: string
+        maxLength: 1
+        description: 'TYPE INTERN. ADDRESS'
+      organizationalUnit:
+        type: string
+        maxLength: 12
+        description: 'ORG. UNIT INT. ADR.'
+      depositBox:
+        type: integer
+        maxLength: 6
+        description: 'DEPOSIT BOX NR.I.ADR'
+      telefonNumber:
+        type: string
+        maxLength: 60
+        description: 'Telefon Number'
+      emailAddress:
+        type: string
+        maxLength: 60
+        description: 'Email Address'
+      contactWelcome:
+        type: boolean
+        maxLength: 1
+        description: 'HORA MODIF.'
+        example: 'T'
+      commentText:
+        type: string
+        maxLength: 60
+        description: 'NUM. TELEFONO'
+        example: 'TEXT'
+      lastModificationDate:
+        type: string
+        maxLength: 10
+        format: date-time
+        description: 'REGI.MOD'
+        example: '2017-12-05T10:52:06'
+      lastModificationBranch:
+        type: string
+        maxLength: 4
+        description: 'BRANCH'
+        example: '0580'
+        
+  Account:
+    type: object
+    required:
+    - accountNumber
+    - bankCode
+    properties:
+      accountNumber:
+        description: 'Account Number'
+        type: string
+        format: string
+        maxLength: 11
+        example: '00000003030'
+      bankCode:
+        type: string
+        description: 'Bank Code'
+        format: string
+        maxLength: 5
+        example: '14000'
+  
+  DomesticAddress:
+    type: object
+    properties:
+      postalCode:
+        description: 'Postal Code'
+        type: string
+        format: string
+        maxLength: 34
+        example: '1621'
+      city:
+        description: 'City'
+        type: string
+        format: string
+        maxLength: 35
+        example: 'Amsterdam'
+      street:
+        description: 'Street'
+        type: string
+        format: string
+        maxLength: 35
+        example: 'Elm St.'
+        
+  BaseCustomerEconomicEnvironment:
+    type: object
+    discriminator: subType
+    required:
+      - birthDate
+      - gender
+      - maritalStatus
+      - status
+      - statusDate
+      - oenace
+      - oenaceEmployer
+    properties:
+      birthDate:
+        type: string
+        format: date
+        example: 2015-05-26      
+      gender:
+        $ref: '#/definitions/EnumProperty'
+      maritalStatus:
+        $ref: '#/definitions/EnumProperty'
+      status:
+        $ref: '#/definitions/EnumProperty'
+      statusDate:
+        type: string
+        format: date
+        example: '2012-08-24'
+      spouseWithoutIncome:
+        type: boolean
+      numberOfChildren:
+        type: integer
+        format: int32
+        example: 12
+      occupation:
+        $ref: '#/definitions/EnumProperty'
+      employmentStartDate:
+        type: string
+        format: date
+        example: '2013-02-03'
+      education:
+        $ref: '#/definitions/EnumProperty'
+      oenace:
+        $ref: '#/definitions/EnumProperty'
+      oenaceEmployer:
+        $ref: '#/definitions/EnumProperty'
+      incomeStatement:
+        type: boolean
+      employerName:
+        type: string
+        format: string
+        maxLength: 35
+      employerAddress:
+        $ref: '#/definitions/DomesticAddress'
+      residenceType:
+        type: string
+        format: string
+        maxLength: 1
+      residenceStartDate:
+        type: string
+        format: date
+        example: '2014-05-08'
+      residenceSize:
+        type: integer
+        format: int32
+        example: 12
+      personsInHousehold:
+        type: integer
+        format: int32
+        example: 4
+      overallIncome:
+        type: number
+        example: 500.00
+      overallExpenses:
+        type: number
+        example: 600.00
+      availableIncome:
+        type: number
+        example: 478.00
+      personCode:
+        type: string
+        format: string
+        maxLength: 39
+      employer:
+        $ref: '#/definitions/PersonKey'
+      payrollIncome:
+        type: number
+        example: 123.00
+      otherIncome:
+        type: number
+        example: 400.00
+      fixedExpenses:
+        type: number
+        example: 700.00
+      distrainableIncome:
+        type: number
+        example: 100.00
+      sharedHousehold:
+        type: boolean
+      employerDeletionDate:
+        type: string
+        format: date 
+        example: '2017-03-24'
+        
+  GetCustomerEconomicEnvironmentRequest:
+    type: object
+    required:
+      - personKey
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+      account:
+        type: string
+        minLength: 1
+        description: 'Account IBAN'
+        example: 'AT231420020012596430'
+      yyWorkflowProcess:
+        type: string
+        maxLength: 4
+        description: 'YY Workflow process'
+        example: 'ACOT'
+        
+  GetCustomerEconomicEnvironmentResponse:
+    allOf:
+      - $ref: '#/definitions/BaseCustomerEconomicEnvironment'
+      - type: object
+      
+  UpdateCustomerEconomicEnvironmentRequest:
+    allOf:
+      - $ref: '#/definitions/BaseCustomerEconomicEnvironment'
+      - type: object
+        properties:
+          personKey:
+            $ref: '#/definitions/PersonKey'
+          account:
+            type: string
+            minLength: 1
+            description: 'Account IBAN'
+            example: 'AT231420020012596430'
+          yyWorkflowProcess:
+            type: string
+            maxLength: 4
+            description: 'Processname - only for YY-Workflow-Applikation to fill with ACOT for workflows Giro, Spar, Termineinlage'
+            example: 'ACOT'
+    
+  PersonHouseholdCalculationAddOn:
+    type: object
+    required:
+      - ownHome
+    properties:
+        ownHome:
+          type: boolean
+          description: 'OwnHome'
+          example: false
+        incomePartner:
+          type: boolean
+          description: 'IncomePartner'
+          example: true
+        amountNettoIncomePartner:
+          type: number
+          description: 'AmountNettoIncomePartner'
+          example: 105.00
+        automobile:
+          type: boolean
+          description: 'Automobile'
+          example: false
+        residentExpensesProof:
+          type: boolean
+          description: 'ResidentExpensesProof'
+          example: false
+        amountIncomeDistrainable:
+          type: number
+          description: 'AmountIncomeDistrainable'
+          example: 100.00
+          
+  PersonHouseholdCalculation:
+    type: object
+    properties:
+        amountNettoIncome:
+          type: number
+          description: 'Amount net Income'
+          example: 1000.05
+        amountFamilyAllowance:
+          type: number
+          description: 'Family Allowance'
+          example: 1005.00
+        amountOtherIncome:
+          type: number
+          description: 'Other monthly Income'
+          example: 1000.00
+        amountDistrainable:
+          type: number
+          description: 'Distrainable amount'
+          example: 100.00
+        amountLiving:
+          type: number
+          description: 'Living amount'
+          example: 100.00
+        amountOverallIncome:
+          type: number
+          description: 'Overall monthly Income'
+          example: 2000.00
+        amountOverallExpenses:
+          type: number
+          description: 'Overall monthly Expenses'
+          example: 1000.50
+        amountResidentExpenses:
+          type: number
+          description: 'Residence-expenses'
+          example: 1000.50
+        amountHouseSavings:
+          type: number
+          description: 'Expenses on house-savings'
+          example: 1000.05
+        amountSavingsProduct:
+          type: number
+          description: 'Saving products'
+          example: 1000.50
+        amountTVPhone:
+          type: number
+          description: 'Costs for local TV network'
+          example: 1000.50
+        amountPaybackLeases:
+          type: number
+          description: 'Paybacks for leases'
+          example: 1000.50
+        amountOtherSavings:
+          type: number
+          description: 'Expenses for other savings'
+          example: 1005.00
+        amountOwnRedemptions:
+          type: number
+          description: 'Own redemption expenses'
+          example: 5000.00
+        amountOtherRedemptions:
+          type: number
+          description: 'Redemption expenses for others'
+          example: 1040.00
+        amountInsurance:
+          type: number
+          description: 'Insurance expenses'
+          example: 2000.00
+        amountOtherLiabilities:
+          type: number
+          description: 'Other liabilities'
+          example: 100.00
+        amountCar:
+          type: number
+          description: 'Costs for car'
+          example: 1050.00
+        otherIncomeType:
+          $ref: '#/definitions/EnumProperty'
+          
+  GetCustomerHouseholdCalculationRequest:
+    type: object
+    required:
+      - personKey
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+      account:
+        type: string
+        minLength: 1
+        description: 'Account IBAN'
+        example: 'AT231420020012596430'
+      yyWorkflowProcess:
+        type: string
+        maxLength: 4
+        description: 'YY Workflow process'
+        example: 'ACOT'
+        
+  GetCustomerHouseholdCalculationResponse:
+    type: object
+    properties:
+      personHouseholdCalculation:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      personHouseholdCalculationAddOn:
+        $ref: '#/definitions/PersonHouseholdCalculationAddOn'
+        
+  UpdateCustomerHouseholdCalculationRequest:
+    type: object
+    required:
+      - personKey
+      - personHouseholdCalculation
+    properties:
+        personKey:
+          $ref: '#/definitions/PersonKey'
+        personHouseholdCalculation:
+          $ref: '#/definitions/PersonHouseholdCalculation'
+        personHouseholdCalculationAddOn:
+          $ref: '#/definitions/PersonHouseholdCalculationAddOn'
+          
+  PersonShortInfo:
+    type: object
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+      name:
+        type: string
+        description: 'Name'
+        example: 'Smith'
+      birthDate:
+        type: string
+        format: date
+        example: '2017-01-01'
+      identFlag:
+        type: string
+        description: 'Flag Ident Customer'
+        example: 'N'
+      address:
+        type: string
+        example: 'Lipa, Batangas'
+      hints:
+        type: string
+        example: 'Hints'
+      oenbId:
+        type: string
+        maxLength: 9
+        description: 'OeNB Identification number'
+        example: '012034587'
+      registerNumber:
+        type: string
+        example: '12345'
+      naturalPerson:
+        type: boolean
+        example: true
+        
+  SearchCustomerDataRequest:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 'Customer Surname'
+        example: 'Young'
+      firstName:
+        type: string
+        description: 'Customer First Name'
+        example: 'Young'
+      birthDate:
+        type: string
+        format: date
+        description: 'Customer Birth Date'
+        example: '1990-01-01'
+      registerNumber:
+        type: string
+        description: 'Customer Register Number'
+        example: '123456'
+      phoneticSearch:
+        type: boolean
+        description: 'Phonetic Search Option'
+        example: true
+      postalCode:
+        type: string
+        description: 'Customer Postal Code'
+        example: '1010'
+      street:
+        type: string
+        description: 'Street name'
+        example: 'Karlsplatz'
+      oenbId:
+        type: string
+        description: 'Applicable for Legal Customers'
+        example: '12345'
+      maxHostCalls:
+        type: integer
+        format: int32
+        description: 'Backend filter for searching'
+        example: 1
+        
+  SearchCustomerDataResponse:
+    type: object
+    properties:
+      persons:
+        type: array
+        items:
+          $ref: '#/definitions/PersonShortInfo'
+      currentDate:
+        type: string
+        maxLength: 10
+        description: 'Current Date'
+      userId:
+        type: string
+        description: 'User ID'
+      time:
+        type: string
+        description: 'Time'
+        
+  GetCustomerPromotionCodesResponse:
+    type: object
+    properties:
+      promotionCodes:
+        type: array
+        items:
+          $ref: '#/definitions/Promotions'
+          
+  Promotions:
+    type: object
+    properties:
+      customer:
+        $ref: '#/definitions/PersonKey'
+      entity:
+        type: string
+        description: 'Entity'
+        example: '0100'
+      promotionCode:
+        type: string
+        description: 'Promotion Code'
+      productFamily:
+        type: string
+        description: 'Product Family'
+        example: '96'
+      productCode:
+        type: string
+        description: 'Product Code'
+        example: 'S118'
+      productShortDescription:
+        type: string
+        description: 'Product Short Description'
+        example: 'SuperschnellKredit'
+      productDescription:
+        type: string
+        description: 'Product Description'
+        example: 'SchnellKredit'
+      channel:
+        type: string
+        description: 'channel'
+      feeCode:
+        type: string
+        description: 'feeCode'
+      feeShortDescription:
+        type: string
+        description: 'Fee Short Description'
+      feeDescription:
+        type: string
+        description: 'Fee Description'
+      specialConditionType:
+        type: string
+        description: 'Special Condition Type'
+        example: '3'
+      specialConditionChunk:
+        type: number
+        description: 'Special Condition Chunk'
+      specialConditionLumpSum:
+        type: number
+        description: 'Special Condition LumpSum'
+      specialConditionPercentage:
+        type: number
+        description: 'Special Condition Percentage'
+      specialConditionRuntime:
+        type: integer
+        format: int32
+        description: 'Special Condition Runtime'
+      specialConditionUntil:
+        type: string
+        format: date
+        description: 'Special Condition Until'
+        example: 2015-05-26 
+      specialFeePlanCode:
+        type: string
+        description: 'Special Fee Plan Code'
+      specialFeePlanDescription:
+        type: string
+        description: 'Special Fee Plan Description'
+      nonRecurringBonusCreditnote:
+        type: number
+        description: 'Special Condition Percentage'
+        example: 50.00
+      validFrom:
+        type: string
+        format: date-time
+        description: 'Valid From'
+        example: '2017-07-21T17:32:28Z'
+      validThru:
+        type: string
+        format: date-time
+        description: 'Valid Thru'
+        example: '2017-07-21T17:32:28Z'

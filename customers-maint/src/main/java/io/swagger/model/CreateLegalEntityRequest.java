@@ -1,0 +1,1306 @@
+package io.swagger.model;
+
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.model.EnumProperty;
+import io.swagger.model.PersonIdentificationDocument;
+import org.threeten.bp.LocalDate;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
+/**
+ * CreateLegalEntityRequest
+ */
+@Validated
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2018-07-21T12:09:30.565+02:00")
+
+public class CreateLegalEntityRequest   {
+  @JsonProperty("accessLevel")
+  private Integer accessLevel = null;
+
+  @JsonProperty("additionalName")
+  private String additionalName = null;
+
+  @JsonProperty("additionalText")
+  private String additionalText = null;
+
+  @JsonProperty("addressForBlinds")
+  private Boolean addressForBlinds = null;
+
+  @JsonProperty("addressOutdated")
+  private Boolean addressOutdated = null;
+
+  @JsonProperty("addressOutdated2")
+  private Boolean addressOutdated2 = null;
+
+  @JsonProperty("advisorKey1")
+  private String advisorKey1 = null;
+
+  @JsonProperty("advisorKey2")
+  private String advisorKey2 = null;
+
+  @JsonProperty("attentionOf")
+  private String attentionOf = null;
+
+  @JsonProperty("blockCustomer")
+  private Boolean blockCustomer = null;
+
+  @JsonProperty("cardName1")
+  private String cardName1 = null;
+
+  @JsonProperty("cardName2")
+  private String cardName2 = null;
+
+  @JsonProperty("cardName2Extended")
+  private String cardName2Extended = null;
+
+  @JsonProperty("citizenSince")
+  private LocalDate citizenSince = null;
+
+  @JsonProperty("city")
+  private String city = null;
+
+  @JsonProperty("city2")
+  private String city2 = null;
+
+  @JsonProperty("country")
+  private EnumProperty country = null;
+
+  @JsonProperty("country2")
+  private EnumProperty country2 = null;
+
+  @JsonProperty("esvg")
+  private EnumProperty esvg = null;
+
+  @JsonProperty("firstName")
+  private String firstName = null;
+
+  @JsonProperty("flagEmployerProspect")
+  private Boolean flagEmployerProspect = null;
+
+  @JsonProperty("identificationDocument1")
+  private PersonIdentificationDocument identificationDocument1 = null;
+
+  @JsonProperty("identificationDocument2")
+  private PersonIdentificationDocument identificationDocument2 = null;
+
+  @JsonProperty("language")
+  private String language = null;
+
+  @JsonProperty("legalFormCode")
+  private Integer legalFormCode = null;
+
+  @JsonProperty("leiCode")
+  private String leiCode = null;
+
+  @JsonProperty("mainAddressChangeDate")
+  private LocalDate mainAddressChangeDate = null;
+
+  @JsonProperty("name")
+  private String name = null;
+
+  @JsonProperty("nationality")
+  private EnumProperty nationality = null;
+
+  @JsonProperty("nationality2")
+  private EnumProperty nationality2 = null;
+
+  @JsonProperty("noAdvertismentType")
+  private String noAdvertismentType = null;
+
+  @JsonProperty("noOENBId")
+  private Boolean noOENBId = null;
+
+  @JsonProperty("noOENBIdTemporary")
+  private Boolean noOENBIdTemporary = null;
+
+  @JsonProperty("oenace")
+  private EnumProperty oenace = null;
+
+  @JsonProperty("oenbId")
+  private String oenbId = null;
+
+  @JsonProperty("pep")
+  private Boolean pep = null;
+
+  @JsonProperty("pepCode")
+  private String pepCode = null;
+
+  @JsonProperty("pepComment")
+  private String pepComment = null;
+
+  @JsonProperty("pepRelative")
+  private Boolean pepRelative = null;
+
+  @JsonProperty("postalCode")
+  private String postalCode = null;
+
+  @JsonProperty("postalCode2")
+  private String postalCode2 = null;
+
+  @JsonProperty("seperateCustomer")
+  private Boolean seperateCustomer = null;
+
+  @JsonProperty("shortWording")
+  private String shortWording = null;
+
+  @JsonProperty("street")
+  private String street = null;
+
+  @JsonProperty("street2")
+  private String street2 = null;
+
+  @JsonProperty("taxLiabilityCountryCode")
+  private String taxLiabilityCountryCode = null;
+
+  @JsonProperty("unwantedCustomer")
+  private Boolean unwantedCustomer = null;
+
+  @JsonProperty("entity")
+  private String entity = null;
+
+  @JsonProperty("mainAddressFlag")
+  private String mainAddressFlag = null;
+
+  public CreateLegalEntityRequest accessLevel(Integer accessLevel) {
+    this.accessLevel = accessLevel;
+    return this;
+  }
+
+  /**
+   * Access Level
+   * @return accessLevel
+  **/
+  @ApiModelProperty(example = "1", value = "Access Level")
+
+
+  public Integer getAccessLevel() {
+    return accessLevel;
+  }
+
+  public void setAccessLevel(Integer accessLevel) {
+    this.accessLevel = accessLevel;
+  }
+
+  public CreateLegalEntityRequest additionalName(String additionalName) {
+    this.additionalName = additionalName;
+    return this;
+  }
+
+  /**
+   * Additional Name
+   * @return additionalName
+  **/
+  @ApiModelProperty(example = "Sam Smith", value = "Additional Name")
+
+@Size(max=90) 
+  public String getAdditionalName() {
+    return additionalName;
+  }
+
+  public void setAdditionalName(String additionalName) {
+    this.additionalName = additionalName;
+  }
+
+  public CreateLegalEntityRequest additionalText(String additionalText) {
+    this.additionalText = additionalText;
+    return this;
+  }
+
+  /**
+   * Additional Text
+   * @return additionalText
+  **/
+  @ApiModelProperty(example = "Text", value = "Additional Text")
+
+@Size(max=35) 
+  public String getAdditionalText() {
+    return additionalText;
+  }
+
+  public void setAdditionalText(String additionalText) {
+    this.additionalText = additionalText;
+  }
+
+  public CreateLegalEntityRequest addressForBlinds(Boolean addressForBlinds) {
+    this.addressForBlinds = addressForBlinds;
+    return this;
+  }
+
+  /**
+   * Flag for address for blind
+   * @return addressForBlinds
+  **/
+  @ApiModelProperty(example = "false", value = "Flag for address for blind")
+
+
+  public Boolean isAddressForBlinds() {
+    return addressForBlinds;
+  }
+
+  public void setAddressForBlinds(Boolean addressForBlinds) {
+    this.addressForBlinds = addressForBlinds;
+  }
+
+  public CreateLegalEntityRequest addressOutdated(Boolean addressOutdated) {
+    this.addressOutdated = addressOutdated;
+    return this;
+  }
+
+  /**
+   * Flag for address outdated
+   * @return addressOutdated
+  **/
+  @ApiModelProperty(example = "true", value = "Flag for address outdated")
+
+
+  public Boolean isAddressOutdated() {
+    return addressOutdated;
+  }
+
+  public void setAddressOutdated(Boolean addressOutdated) {
+    this.addressOutdated = addressOutdated;
+  }
+
+  public CreateLegalEntityRequest addressOutdated2(Boolean addressOutdated2) {
+    this.addressOutdated2 = addressOutdated2;
+    return this;
+  }
+
+  /**
+   * Flag for address outdated 2
+   * @return addressOutdated2
+  **/
+  @ApiModelProperty(example = "true", value = "Flag for address outdated 2")
+
+
+  public Boolean isAddressOutdated2() {
+    return addressOutdated2;
+  }
+
+  public void setAddressOutdated2(Boolean addressOutdated2) {
+    this.addressOutdated2 = addressOutdated2;
+  }
+
+  public CreateLegalEntityRequest advisorKey1(String advisorKey1) {
+    this.advisorKey1 = advisorKey1;
+    return this;
+  }
+
+  /**
+   * Advisor Key 1
+   * @return advisorKey1
+  **/
+  @ApiModelProperty(example = "Adviser 1", value = "Advisor Key 1")
+
+@Size(max=19) 
+  public String getAdvisorKey1() {
+    return advisorKey1;
+  }
+
+  public void setAdvisorKey1(String advisorKey1) {
+    this.advisorKey1 = advisorKey1;
+  }
+
+  public CreateLegalEntityRequest advisorKey2(String advisorKey2) {
+    this.advisorKey2 = advisorKey2;
+    return this;
+  }
+
+  /**
+   * Advisor Key 2
+   * @return advisorKey2
+  **/
+  @ApiModelProperty(example = "Adviser 2", value = "Advisor Key 2")
+
+@Size(max=19) 
+  public String getAdvisorKey2() {
+    return advisorKey2;
+  }
+
+  public void setAdvisorKey2(String advisorKey2) {
+    this.advisorKey2 = advisorKey2;
+  }
+
+  public CreateLegalEntityRequest attentionOf(String attentionOf) {
+    this.attentionOf = attentionOf;
+    return this;
+  }
+
+  /**
+   * Attention of
+   * @return attentionOf
+  **/
+  @ApiModelProperty(example = "Smith", value = "Attention of")
+
+@Size(max=35) 
+  public String getAttentionOf() {
+    return attentionOf;
+  }
+
+  public void setAttentionOf(String attentionOf) {
+    this.attentionOf = attentionOf;
+  }
+
+  public CreateLegalEntityRequest blockCustomer(Boolean blockCustomer) {
+    this.blockCustomer = blockCustomer;
+    return this;
+  }
+
+  /**
+   * Flag for Block Customer
+   * @return blockCustomer
+  **/
+  @ApiModelProperty(example = "false", value = "Flag for Block Customer")
+
+
+  public Boolean isBlockCustomer() {
+    return blockCustomer;
+  }
+
+  public void setBlockCustomer(Boolean blockCustomer) {
+    this.blockCustomer = blockCustomer;
+  }
+
+  public CreateLegalEntityRequest cardName1(String cardName1) {
+    this.cardName1 = cardName1;
+    return this;
+  }
+
+  /**
+   * Card Name 1
+   * @return cardName1
+  **/
+  @ApiModelProperty(example = "cardName1", value = "Card Name 1")
+
+@Size(max=26) 
+  public String getCardName1() {
+    return cardName1;
+  }
+
+  public void setCardName1(String cardName1) {
+    this.cardName1 = cardName1;
+  }
+
+  public CreateLegalEntityRequest cardName2(String cardName2) {
+    this.cardName2 = cardName2;
+    return this;
+  }
+
+  /**
+   * Card Name 2
+   * @return cardName2
+  **/
+  @ApiModelProperty(example = "cardName2", value = "Card Name 2")
+
+@Size(max=26) 
+  public String getCardName2() {
+    return cardName2;
+  }
+
+  public void setCardName2(String cardName2) {
+    this.cardName2 = cardName2;
+  }
+
+  public CreateLegalEntityRequest cardName2Extended(String cardName2Extended) {
+    this.cardName2Extended = cardName2Extended;
+    return this;
+  }
+
+  /**
+   * Card Name 2 Extended
+   * @return cardName2Extended
+  **/
+  @ApiModelProperty(example = "cardName2Extended", value = "Card Name 2 Extended")
+
+@Size(max=26) 
+  public String getCardName2Extended() {
+    return cardName2Extended;
+  }
+
+  public void setCardName2Extended(String cardName2Extended) {
+    this.cardName2Extended = cardName2Extended;
+  }
+
+  public CreateLegalEntityRequest citizenSince(LocalDate citizenSince) {
+    this.citizenSince = citizenSince;
+    return this;
+  }
+
+  /**
+   * Citizen Since
+   * @return citizenSince
+  **/
+  @ApiModelProperty(example = "2017-10-26", value = "Citizen Since")
+
+  @Valid
+
+  public LocalDate getCitizenSince() {
+    return citizenSince;
+  }
+
+  public void setCitizenSince(LocalDate citizenSince) {
+    this.citizenSince = citizenSince;
+  }
+
+  public CreateLegalEntityRequest city(String city) {
+    this.city = city;
+    return this;
+  }
+
+  /**
+   * City
+   * @return city
+  **/
+  @ApiModelProperty(example = "Wein", value = "City")
+
+@Size(max=35) 
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+  public CreateLegalEntityRequest city2(String city2) {
+    this.city2 = city2;
+    return this;
+  }
+
+  /**
+   * City 2
+   * @return city2
+  **/
+  @ApiModelProperty(example = "Paris", value = "City 2")
+
+@Size(max=35) 
+  public String getCity2() {
+    return city2;
+  }
+
+  public void setCity2(String city2) {
+    this.city2 = city2;
+  }
+
+  public CreateLegalEntityRequest country(EnumProperty country) {
+    this.country = country;
+    return this;
+  }
+
+  /**
+   * Get country
+   * @return country
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+
+  public EnumProperty getCountry() {
+    return country;
+  }
+
+  public void setCountry(EnumProperty country) {
+    this.country = country;
+  }
+
+  public CreateLegalEntityRequest country2(EnumProperty country2) {
+    this.country2 = country2;
+    return this;
+  }
+
+  /**
+   * Get country2
+   * @return country2
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public EnumProperty getCountry2() {
+    return country2;
+  }
+
+  public void setCountry2(EnumProperty country2) {
+    this.country2 = country2;
+  }
+
+  public CreateLegalEntityRequest esvg(EnumProperty esvg) {
+    this.esvg = esvg;
+    return this;
+  }
+
+  /**
+   * Get esvg
+   * @return esvg
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public EnumProperty getEsvg() {
+    return esvg;
+  }
+
+  public void setEsvg(EnumProperty esvg) {
+    this.esvg = esvg;
+  }
+
+  public CreateLegalEntityRequest firstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  /**
+   * First Name
+   * @return firstName
+  **/
+  @ApiModelProperty(example = "Sam", value = "First Name")
+
+@Size(max=30) 
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public CreateLegalEntityRequest flagEmployerProspect(Boolean flagEmployerProspect) {
+    this.flagEmployerProspect = flagEmployerProspect;
+    return this;
+  }
+
+  /**
+   * Flag for Employer Prospect
+   * @return flagEmployerProspect
+  **/
+  @ApiModelProperty(example = "false", value = "Flag for Employer Prospect")
+
+
+  public Boolean isFlagEmployerProspect() {
+    return flagEmployerProspect;
+  }
+
+  public void setFlagEmployerProspect(Boolean flagEmployerProspect) {
+    this.flagEmployerProspect = flagEmployerProspect;
+  }
+
+  public CreateLegalEntityRequest identificationDocument1(PersonIdentificationDocument identificationDocument1) {
+    this.identificationDocument1 = identificationDocument1;
+    return this;
+  }
+
+  /**
+   * Get identificationDocument1
+   * @return identificationDocument1
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public PersonIdentificationDocument getIdentificationDocument1() {
+    return identificationDocument1;
+  }
+
+  public void setIdentificationDocument1(PersonIdentificationDocument identificationDocument1) {
+    this.identificationDocument1 = identificationDocument1;
+  }
+
+  public CreateLegalEntityRequest identificationDocument2(PersonIdentificationDocument identificationDocument2) {
+    this.identificationDocument2 = identificationDocument2;
+    return this;
+  }
+
+  /**
+   * Get identificationDocument2
+   * @return identificationDocument2
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public PersonIdentificationDocument getIdentificationDocument2() {
+    return identificationDocument2;
+  }
+
+  public void setIdentificationDocument2(PersonIdentificationDocument identificationDocument2) {
+    this.identificationDocument2 = identificationDocument2;
+  }
+
+  public CreateLegalEntityRequest language(String language) {
+    this.language = language;
+    return this;
+  }
+
+  /**
+   * Language Code
+   * @return language
+  **/
+  @ApiModelProperty(example = "0", required = true, value = "Language Code")
+  @NotNull
+
+@Size(max=1) 
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public CreateLegalEntityRequest legalFormCode(Integer legalFormCode) {
+    this.legalFormCode = legalFormCode;
+    return this;
+  }
+
+  /**
+   * Legal Form code
+   * @return legalFormCode
+  **/
+  @ApiModelProperty(example = "100", required = true, value = "Legal Form code")
+  @NotNull
+
+
+  public Integer getLegalFormCode() {
+    return legalFormCode;
+  }
+
+  public void setLegalFormCode(Integer legalFormCode) {
+    this.legalFormCode = legalFormCode;
+  }
+
+  public CreateLegalEntityRequest leiCode(String leiCode) {
+    this.leiCode = leiCode;
+    return this;
+  }
+
+  /**
+   * LEI Code
+   * @return leiCode
+  **/
+  @ApiModelProperty(example = "51293836123123", value = "LEI Code")
+
+@Size(max=20) 
+  public String getLeiCode() {
+    return leiCode;
+  }
+
+  public void setLeiCode(String leiCode) {
+    this.leiCode = leiCode;
+  }
+
+  public CreateLegalEntityRequest mainAddressChangeDate(LocalDate mainAddressChangeDate) {
+    this.mainAddressChangeDate = mainAddressChangeDate;
+    return this;
+  }
+
+  /**
+   * Main Address Change Date
+   * @return mainAddressChangeDate
+  **/
+  @ApiModelProperty(example = "2017-01-20", value = "Main Address Change Date")
+
+  @Valid
+
+  public LocalDate getMainAddressChangeDate() {
+    return mainAddressChangeDate;
+  }
+
+  public void setMainAddressChangeDate(LocalDate mainAddressChangeDate) {
+    this.mainAddressChangeDate = mainAddressChangeDate;
+  }
+
+  public CreateLegalEntityRequest name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  /**
+   * Surname
+   * @return name
+  **/
+  @ApiModelProperty(example = "Smith", required = true, value = "Surname")
+  @NotNull
+
+@Size(max=30) 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public CreateLegalEntityRequest nationality(EnumProperty nationality) {
+    this.nationality = nationality;
+    return this;
+  }
+
+  /**
+   * Get nationality
+   * @return nationality
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+
+  public EnumProperty getNationality() {
+    return nationality;
+  }
+
+  public void setNationality(EnumProperty nationality) {
+    this.nationality = nationality;
+  }
+
+  public CreateLegalEntityRequest nationality2(EnumProperty nationality2) {
+    this.nationality2 = nationality2;
+    return this;
+  }
+
+  /**
+   * Get nationality2
+   * @return nationality2
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public EnumProperty getNationality2() {
+    return nationality2;
+  }
+
+  public void setNationality2(EnumProperty nationality2) {
+    this.nationality2 = nationality2;
+  }
+
+  public CreateLegalEntityRequest noAdvertismentType(String noAdvertismentType) {
+    this.noAdvertismentType = noAdvertismentType;
+    return this;
+  }
+
+  /**
+   * No Advertisment Type
+   * @return noAdvertismentType
+  **/
+  @ApiModelProperty(example = "N", value = "No Advertisment Type")
+
+@Size(max=1) 
+  public String getNoAdvertismentType() {
+    return noAdvertismentType;
+  }
+
+  public void setNoAdvertismentType(String noAdvertismentType) {
+    this.noAdvertismentType = noAdvertismentType;
+  }
+
+  public CreateLegalEntityRequest noOENBId(Boolean noOENBId) {
+    this.noOENBId = noOENBId;
+    return this;
+  }
+
+  /**
+   * person has no OeNB-Id - only when legal entity (values Y, N, space)
+   * @return noOENBId
+  **/
+  @ApiModelProperty(example = "true", value = "person has no OeNB-Id - only when legal entity (values Y, N, space)")
+
+
+  public Boolean isNoOENBId() {
+    return noOENBId;
+  }
+
+  public void setNoOENBId(Boolean noOENBId) {
+    this.noOENBId = noOENBId;
+  }
+
+  public CreateLegalEntityRequest noOENBIdTemporary(Boolean noOENBIdTemporary) {
+    this.noOENBIdTemporary = noOENBIdTemporary;
+    return this;
+  }
+
+  /**
+   * No OeNB-Id available - only when legal entity (values Y, N, space)
+   * @return noOENBIdTemporary
+  **/
+  @ApiModelProperty(example = "true", value = "No OeNB-Id available - only when legal entity (values Y, N, space)")
+
+
+  public Boolean isNoOENBIdTemporary() {
+    return noOENBIdTemporary;
+  }
+
+  public void setNoOENBIdTemporary(Boolean noOENBIdTemporary) {
+    this.noOENBIdTemporary = noOENBIdTemporary;
+  }
+
+  public CreateLegalEntityRequest oenace(EnumProperty oenace) {
+    this.oenace = oenace;
+    return this;
+  }
+
+  /**
+   * Get oenace
+   * @return oenace
+  **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+
+  public EnumProperty getOenace() {
+    return oenace;
+  }
+
+  public void setOenace(EnumProperty oenace) {
+    this.oenace = oenace;
+  }
+
+  public CreateLegalEntityRequest oenbId(String oenbId) {
+    this.oenbId = oenbId;
+    return this;
+  }
+
+  /**
+   * OENB ID
+   * @return oenbId
+  **/
+  @ApiModelProperty(example = "123456789", value = "OENB ID")
+
+@Size(max=9) 
+  public String getOenbId() {
+    return oenbId;
+  }
+
+  public void setOenbId(String oenbId) {
+    this.oenbId = oenbId;
+  }
+
+  public CreateLegalEntityRequest pep(Boolean pep) {
+    this.pep = pep;
+    return this;
+  }
+
+  /**
+   * PEP (values Y, N, space)
+   * @return pep
+  **/
+  @ApiModelProperty(example = "true", value = "PEP (values Y, N, space)")
+
+
+  public Boolean isPep() {
+    return pep;
+  }
+
+  public void setPep(Boolean pep) {
+    this.pep = pep;
+  }
+
+  public CreateLegalEntityRequest pepCode(String pepCode) {
+    this.pepCode = pepCode;
+    return this;
+  }
+
+  /**
+   * PEP-Code
+   * @return pepCode
+  **/
+  @ApiModelProperty(example = "PC", value = "PEP-Code")
+
+@Size(max=2) 
+  public String getPepCode() {
+    return pepCode;
+  }
+
+  public void setPepCode(String pepCode) {
+    this.pepCode = pepCode;
+  }
+
+  public CreateLegalEntityRequest pepComment(String pepComment) {
+    this.pepComment = pepComment;
+    return this;
+  }
+
+  /**
+   * PEP-Comment
+   * @return pepComment
+  **/
+  @ApiModelProperty(example = "Sample PEP Comment", value = "PEP-Comment")
+
+@Size(max=50) 
+  public String getPepComment() {
+    return pepComment;
+  }
+
+  public void setPepComment(String pepComment) {
+    this.pepComment = pepComment;
+  }
+
+  public CreateLegalEntityRequest pepRelative(Boolean pepRelative) {
+    this.pepRelative = pepRelative;
+    return this;
+  }
+
+  /**
+   * PEP-Relative (values Y, N, space)
+   * @return pepRelative
+  **/
+  @ApiModelProperty(example = "true", value = "PEP-Relative (values Y, N, space)")
+
+
+  public Boolean isPepRelative() {
+    return pepRelative;
+  }
+
+  public void setPepRelative(Boolean pepRelative) {
+    this.pepRelative = pepRelative;
+  }
+
+  public CreateLegalEntityRequest postalCode(String postalCode) {
+    this.postalCode = postalCode;
+    return this;
+  }
+
+  /**
+   * Postal Code
+   * @return postalCode
+  **/
+  @ApiModelProperty(example = "1010", required = true, value = "Postal Code")
+  @NotNull
+
+@Size(max=6) 
+  public String getPostalCode() {
+    return postalCode;
+  }
+
+  public void setPostalCode(String postalCode) {
+    this.postalCode = postalCode;
+  }
+
+  public CreateLegalEntityRequest postalCode2(String postalCode2) {
+    this.postalCode2 = postalCode2;
+    return this;
+  }
+
+  /**
+   * Postal Code2
+   * @return postalCode2
+  **/
+  @ApiModelProperty(example = "1010", value = "Postal Code2")
+
+@Size(max=6) 
+  public String getPostalCode2() {
+    return postalCode2;
+  }
+
+  public void setPostalCode2(String postalCode2) {
+    this.postalCode2 = postalCode2;
+  }
+
+  public CreateLegalEntityRequest seperateCustomer(Boolean seperateCustomer) {
+    this.seperateCustomer = seperateCustomer;
+    return this;
+  }
+
+  /**
+   * Seperate Customer
+   * @return seperateCustomer
+  **/
+  @ApiModelProperty(example = "true", value = "Seperate Customer")
+
+
+  public Boolean isSeperateCustomer() {
+    return seperateCustomer;
+  }
+
+  public void setSeperateCustomer(Boolean seperateCustomer) {
+    this.seperateCustomer = seperateCustomer;
+  }
+
+  public CreateLegalEntityRequest shortWording(String shortWording) {
+    this.shortWording = shortWording;
+    return this;
+  }
+
+  /**
+   * ShortWording Person name
+   * @return shortWording
+  **/
+  @ApiModelProperty(example = "Gmgb Company", required = true, value = "ShortWording Person name")
+  @NotNull
+
+@Size(max=35) 
+  public String getShortWording() {
+    return shortWording;
+  }
+
+  public void setShortWording(String shortWording) {
+    this.shortWording = shortWording;
+  }
+
+  public CreateLegalEntityRequest street(String street) {
+    this.street = street;
+    return this;
+  }
+
+  /**
+   * Street
+   * @return street
+  **/
+  @ApiModelProperty(example = "Karlsplatz", required = true, value = "Street")
+  @NotNull
+
+@Size(max=35) 
+  public String getStreet() {
+    return street;
+  }
+
+  public void setStreet(String street) {
+    this.street = street;
+  }
+
+  public CreateLegalEntityRequest street2(String street2) {
+    this.street2 = street2;
+    return this;
+  }
+
+  /**
+   * Street 2
+   * @return street2
+  **/
+  @ApiModelProperty(example = "Herrengasse", value = "Street 2")
+
+@Size(max=35) 
+  public String getStreet2() {
+    return street2;
+  }
+
+  public void setStreet2(String street2) {
+    this.street2 = street2;
+  }
+
+  public CreateLegalEntityRequest taxLiabilityCountryCode(String taxLiabilityCountryCode) {
+    this.taxLiabilityCountryCode = taxLiabilityCountryCode;
+    return this;
+  }
+
+  /**
+   * Tax Liability Country Code
+   * @return taxLiabilityCountryCode
+  **/
+  @ApiModelProperty(example = "AT", required = true, value = "Tax Liability Country Code")
+  @NotNull
+
+@Size(max=2) 
+  public String getTaxLiabilityCountryCode() {
+    return taxLiabilityCountryCode;
+  }
+
+  public void setTaxLiabilityCountryCode(String taxLiabilityCountryCode) {
+    this.taxLiabilityCountryCode = taxLiabilityCountryCode;
+  }
+
+  public CreateLegalEntityRequest unwantedCustomer(Boolean unwantedCustomer) {
+    this.unwantedCustomer = unwantedCustomer;
+    return this;
+  }
+
+  /**
+   * Unwanted Customer Indicator
+   * @return unwantedCustomer
+  **/
+  @ApiModelProperty(example = "true", value = "Unwanted Customer Indicator")
+
+
+  public Boolean isUnwantedCustomer() {
+    return unwantedCustomer;
+  }
+
+  public void setUnwantedCustomer(Boolean unwantedCustomer) {
+    this.unwantedCustomer = unwantedCustomer;
+  }
+
+  public CreateLegalEntityRequest entity(String entity) {
+    this.entity = entity;
+    return this;
+  }
+
+  /**
+   * Customer Entity
+   * @return entity
+  **/
+  @ApiModelProperty(example = "0100", required = true, value = "Customer Entity")
+  @NotNull
+
+@Size(max=4) 
+  public String getEntity() {
+    return entity;
+  }
+
+  public void setEntity(String entity) {
+    this.entity = entity;
+  }
+
+  public CreateLegalEntityRequest mainAddressFlag(String mainAddressFlag) {
+    this.mainAddressFlag = mainAddressFlag;
+    return this;
+  }
+
+  /**
+   * Flag for Main Address
+   * @return mainAddressFlag
+  **/
+  @ApiModelProperty(example = "Y/N", required = true, value = "Flag for Main Address")
+  @NotNull
+
+@Size(max=1) 
+  public String getMainAddressFlag() {
+    return mainAddressFlag;
+  }
+
+  public void setMainAddressFlag(String mainAddressFlag) {
+    this.mainAddressFlag = mainAddressFlag;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    CreateLegalEntityRequest createLegalEntityRequest = (CreateLegalEntityRequest) o;
+    return Objects.equals(this.accessLevel, createLegalEntityRequest.accessLevel) &&
+        Objects.equals(this.additionalName, createLegalEntityRequest.additionalName) &&
+        Objects.equals(this.additionalText, createLegalEntityRequest.additionalText) &&
+        Objects.equals(this.addressForBlinds, createLegalEntityRequest.addressForBlinds) &&
+        Objects.equals(this.addressOutdated, createLegalEntityRequest.addressOutdated) &&
+        Objects.equals(this.addressOutdated2, createLegalEntityRequest.addressOutdated2) &&
+        Objects.equals(this.advisorKey1, createLegalEntityRequest.advisorKey1) &&
+        Objects.equals(this.advisorKey2, createLegalEntityRequest.advisorKey2) &&
+        Objects.equals(this.attentionOf, createLegalEntityRequest.attentionOf) &&
+        Objects.equals(this.blockCustomer, createLegalEntityRequest.blockCustomer) &&
+        Objects.equals(this.cardName1, createLegalEntityRequest.cardName1) &&
+        Objects.equals(this.cardName2, createLegalEntityRequest.cardName2) &&
+        Objects.equals(this.cardName2Extended, createLegalEntityRequest.cardName2Extended) &&
+        Objects.equals(this.citizenSince, createLegalEntityRequest.citizenSince) &&
+        Objects.equals(this.city, createLegalEntityRequest.city) &&
+        Objects.equals(this.city2, createLegalEntityRequest.city2) &&
+        Objects.equals(this.country, createLegalEntityRequest.country) &&
+        Objects.equals(this.country2, createLegalEntityRequest.country2) &&
+        Objects.equals(this.esvg, createLegalEntityRequest.esvg) &&
+        Objects.equals(this.firstName, createLegalEntityRequest.firstName) &&
+        Objects.equals(this.flagEmployerProspect, createLegalEntityRequest.flagEmployerProspect) &&
+        Objects.equals(this.identificationDocument1, createLegalEntityRequest.identificationDocument1) &&
+        Objects.equals(this.identificationDocument2, createLegalEntityRequest.identificationDocument2) &&
+        Objects.equals(this.language, createLegalEntityRequest.language) &&
+        Objects.equals(this.legalFormCode, createLegalEntityRequest.legalFormCode) &&
+        Objects.equals(this.leiCode, createLegalEntityRequest.leiCode) &&
+        Objects.equals(this.mainAddressChangeDate, createLegalEntityRequest.mainAddressChangeDate) &&
+        Objects.equals(this.name, createLegalEntityRequest.name) &&
+        Objects.equals(this.nationality, createLegalEntityRequest.nationality) &&
+        Objects.equals(this.nationality2, createLegalEntityRequest.nationality2) &&
+        Objects.equals(this.noAdvertismentType, createLegalEntityRequest.noAdvertismentType) &&
+        Objects.equals(this.noOENBId, createLegalEntityRequest.noOENBId) &&
+        Objects.equals(this.noOENBIdTemporary, createLegalEntityRequest.noOENBIdTemporary) &&
+        Objects.equals(this.oenace, createLegalEntityRequest.oenace) &&
+        Objects.equals(this.oenbId, createLegalEntityRequest.oenbId) &&
+        Objects.equals(this.pep, createLegalEntityRequest.pep) &&
+        Objects.equals(this.pepCode, createLegalEntityRequest.pepCode) &&
+        Objects.equals(this.pepComment, createLegalEntityRequest.pepComment) &&
+        Objects.equals(this.pepRelative, createLegalEntityRequest.pepRelative) &&
+        Objects.equals(this.postalCode, createLegalEntityRequest.postalCode) &&
+        Objects.equals(this.postalCode2, createLegalEntityRequest.postalCode2) &&
+        Objects.equals(this.seperateCustomer, createLegalEntityRequest.seperateCustomer) &&
+        Objects.equals(this.shortWording, createLegalEntityRequest.shortWording) &&
+        Objects.equals(this.street, createLegalEntityRequest.street) &&
+        Objects.equals(this.street2, createLegalEntityRequest.street2) &&
+        Objects.equals(this.taxLiabilityCountryCode, createLegalEntityRequest.taxLiabilityCountryCode) &&
+        Objects.equals(this.unwantedCustomer, createLegalEntityRequest.unwantedCustomer) &&
+        Objects.equals(this.entity, createLegalEntityRequest.entity) &&
+        Objects.equals(this.mainAddressFlag, createLegalEntityRequest.mainAddressFlag);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(accessLevel, additionalName, additionalText, addressForBlinds, addressOutdated, addressOutdated2, advisorKey1, advisorKey2, attentionOf, blockCustomer, cardName1, cardName2, cardName2Extended, citizenSince, city, city2, country, country2, esvg, firstName, flagEmployerProspect, identificationDocument1, identificationDocument2, language, legalFormCode, leiCode, mainAddressChangeDate, name, nationality, nationality2, noAdvertismentType, noOENBId, noOENBIdTemporary, oenace, oenbId, pep, pepCode, pepComment, pepRelative, postalCode, postalCode2, seperateCustomer, shortWording, street, street2, taxLiabilityCountryCode, unwantedCustomer, entity, mainAddressFlag);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class CreateLegalEntityRequest {\n");
+    
+    sb.append("    accessLevel: ").append(toIndentedString(accessLevel)).append("\n");
+    sb.append("    additionalName: ").append(toIndentedString(additionalName)).append("\n");
+    sb.append("    additionalText: ").append(toIndentedString(additionalText)).append("\n");
+    sb.append("    addressForBlinds: ").append(toIndentedString(addressForBlinds)).append("\n");
+    sb.append("    addressOutdated: ").append(toIndentedString(addressOutdated)).append("\n");
+    sb.append("    addressOutdated2: ").append(toIndentedString(addressOutdated2)).append("\n");
+    sb.append("    advisorKey1: ").append(toIndentedString(advisorKey1)).append("\n");
+    sb.append("    advisorKey2: ").append(toIndentedString(advisorKey2)).append("\n");
+    sb.append("    attentionOf: ").append(toIndentedString(attentionOf)).append("\n");
+    sb.append("    blockCustomer: ").append(toIndentedString(blockCustomer)).append("\n");
+    sb.append("    cardName1: ").append(toIndentedString(cardName1)).append("\n");
+    sb.append("    cardName2: ").append(toIndentedString(cardName2)).append("\n");
+    sb.append("    cardName2Extended: ").append(toIndentedString(cardName2Extended)).append("\n");
+    sb.append("    citizenSince: ").append(toIndentedString(citizenSince)).append("\n");
+    sb.append("    city: ").append(toIndentedString(city)).append("\n");
+    sb.append("    city2: ").append(toIndentedString(city2)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
+    sb.append("    country2: ").append(toIndentedString(country2)).append("\n");
+    sb.append("    esvg: ").append(toIndentedString(esvg)).append("\n");
+    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
+    sb.append("    flagEmployerProspect: ").append(toIndentedString(flagEmployerProspect)).append("\n");
+    sb.append("    identificationDocument1: ").append(toIndentedString(identificationDocument1)).append("\n");
+    sb.append("    identificationDocument2: ").append(toIndentedString(identificationDocument2)).append("\n");
+    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    legalFormCode: ").append(toIndentedString(legalFormCode)).append("\n");
+    sb.append("    leiCode: ").append(toIndentedString(leiCode)).append("\n");
+    sb.append("    mainAddressChangeDate: ").append(toIndentedString(mainAddressChangeDate)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    nationality: ").append(toIndentedString(nationality)).append("\n");
+    sb.append("    nationality2: ").append(toIndentedString(nationality2)).append("\n");
+    sb.append("    noAdvertismentType: ").append(toIndentedString(noAdvertismentType)).append("\n");
+    sb.append("    noOENBId: ").append(toIndentedString(noOENBId)).append("\n");
+    sb.append("    noOENBIdTemporary: ").append(toIndentedString(noOENBIdTemporary)).append("\n");
+    sb.append("    oenace: ").append(toIndentedString(oenace)).append("\n");
+    sb.append("    oenbId: ").append(toIndentedString(oenbId)).append("\n");
+    sb.append("    pep: ").append(toIndentedString(pep)).append("\n");
+    sb.append("    pepCode: ").append(toIndentedString(pepCode)).append("\n");
+    sb.append("    pepComment: ").append(toIndentedString(pepComment)).append("\n");
+    sb.append("    pepRelative: ").append(toIndentedString(pepRelative)).append("\n");
+    sb.append("    postalCode: ").append(toIndentedString(postalCode)).append("\n");
+    sb.append("    postalCode2: ").append(toIndentedString(postalCode2)).append("\n");
+    sb.append("    seperateCustomer: ").append(toIndentedString(seperateCustomer)).append("\n");
+    sb.append("    shortWording: ").append(toIndentedString(shortWording)).append("\n");
+    sb.append("    street: ").append(toIndentedString(street)).append("\n");
+    sb.append("    street2: ").append(toIndentedString(street2)).append("\n");
+    sb.append("    taxLiabilityCountryCode: ").append(toIndentedString(taxLiabilityCountryCode)).append("\n");
+    sb.append("    unwantedCustomer: ").append(toIndentedString(unwantedCustomer)).append("\n");
+    sb.append("    entity: ").append(toIndentedString(entity)).append("\n");
+    sb.append("    mainAddressFlag: ").append(toIndentedString(mainAddressFlag)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+}
+

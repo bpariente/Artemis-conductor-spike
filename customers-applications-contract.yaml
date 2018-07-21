@@ -1,0 +1,275 @@
+swagger: '2.0'
+info:
+  title: BAWAG MSA Customer Applications REST API
+  description: This is a POC project for customer-applications ! By configuring a rest service with hystrix and feign(ribbon included) and calling and external service running on multiple instances we prove the power of spring cloud integration ! Further integration with Spring Cloud auto-configuratio abd Eureka are added !
+  termsOfService: commons terms
+    Every response is contained by an envelope. That is, each response has a
+    predictable set of keys with which you can expect to interact
+  version: "1.0.0"
+
+################################################################################
+#                  Host, Base Path, Schemes and Content Types                  #
+################################################################################
+host: api.bawagpsk.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /msa/
+produces:
+  - application/json
+
+################################################################################
+#                                   Parameters[path]                           #
+################################################################################
+parameters:
+  customerEntity:
+    name: customerEntity
+    in: path
+    description: 'Entity of the Customer'
+    type: string
+    required: true
+    maxLength: 4
+  customerNumber:
+    name: customerNumber
+    in: path
+    description: 'Customer Number'
+    type: string
+    required: true
+    maxLength: 8
+  
+################################################################################
+#                                           Paths                              #
+################################################################################    
+paths:
+  /customers/{customerEntity}-{customerNumber}/products:
+    get:
+      operationId: 'getCustomerProducts'
+      tags: 
+        - CustomerProducts
+      summary: 'Retrieves the Customer Product list'
+      description: 'Retrieves the Customer Rating Data; Calls P055'
+      parameters:
+        - $ref: '#/parameters/customerEntity'
+        - $ref: '#/parameters/customerNumber'
+    
+      responses:
+        200:
+          description: 'Retrieved Customer Product List'
+          schema:
+            $ref: '#/definitions/GetCustomerProductsResponse'
+        400:
+          description: 'Application error - Verify the BAWAG specific headers for detailed information'
+        404:
+          description: 'Customer not found'
+        500:
+          description: 'Business or technical error - See x-bawagpsk-errors header for detailed information'
+          
+  /checkemployer:
+    post:
+      operationId: checkEmployer
+      tags:
+        - CheckEmployer
+      summary: Check Employee balcklist and Insolvency
+      description: 
+        Checks wether or not an employer is in a blacklist or insolvent
+      consumes:
+        - application/json
+      parameters:
+        - name: registerNumber
+          in: query
+          description: "Register Number"
+          type: string
+          format: string
+          
+        - name: firstName
+          in: query
+          description: "First Name"
+          type: string
+          format: string
+          
+        - name: surname_companyName
+          in: query
+          description: "companyName.surname"
+          type: string
+          format: string
+        
+        - name: birthdate_foundingDate
+          in: query
+          description: "birthdate FoundingDate"
+          type: string
+          format: Date
+        
+        - name: street 
+          in: query
+          description: "Street "
+          type: string
+          format: string
+        
+        - name: postalCode 
+          in: query
+          description: "Postal code "
+          type: string
+          format: string
+        
+        - name: oenbid
+          in: query
+          description: "OENBId "
+          type: string
+          format: string
+        
+        - name: phoneticSearch 
+          in: query
+          description: "Phonetic search "
+          type: string
+          format: string
+        
+      responses:
+        200:
+          description: "Check Employer Response"
+          schema:
+            $ref: '#/definitions/CheckEmployerResponse'
+        400:
+          description: "Application error - Verify the BAWAG specific headers for detailed information"
+        404:
+          description: "Employer not found"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: '#/definitions/Error'
+definitions: 
+  CheckEmployerResponse:
+    type: object
+    properties:
+      employeeCheck:
+        description: 'Solvency Check Response'
+        type: string
+        example: ok
+  GetCustomerProductsRequest:
+    type: object
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+  PersonKey:
+    type: object
+    required:
+      - entity
+      - personNumber
+    properties:
+      entity:
+        type: string
+        description: 'ENTITY-CODE'
+        example: '0100'
+      personNumber:
+        type: string
+        description: 'CUSTOMER NUMBER'
+        example: '00000001'   
+  GetCustomerProductsResponse:
+    type: object
+    properties:
+      relatedProducts:
+        type: array
+        items:
+          $ref: '#/definitions/RelatedProducts'
+  RelatedProducts:
+    type: object
+    properties:
+      productCode:
+        type: string
+        description: 'Product Code'
+        example: 'M00S'
+      account:
+        $ref: '#/definitions/Account'
+      productTypeText:
+        type: string
+        description: 'Product Type Text'
+        example: 'Kreditkarte Eigen'
+      subProductText:
+        type: string
+        description: 'Sub Product Text'
+        example: 'BAWAG MasterCard'  
+      productRelationText:
+        type: string
+        description: 'Product Relation Text'
+        example: 'Inhaber'
+      accountManagementText:
+        type: string
+        description: 'Account Management Text'
+        example: '01'
+      currency:
+        type: string
+        description: 'currency'
+        example: 'EUR'
+      balance:
+        type: number
+        description: 'balance'
+        example: 1100.00
+      stateText:
+        type: string
+        description: 'State Text'
+        example: 'INAKTIV'
+      accountTypeCode:
+        type: string
+        description: 'Account Type Code'
+        example: '50'
+      numCon:
+        type: string
+        description: 'numCon'
+        example: '03700402320'
+      accountManager:
+        type: string
+        description: 'Account Manager'
+        example: '01000376KKB6'
+      flagAut:
+        type: string
+        description: 'FlagAut'
+        example: 'Y'
+      participationType:
+        type: string
+        description: 'Participation Type'
+        example: 'T'
+      iban:
+        type: string
+        description: 'IBAN Account of the Customer'
+        example: 'AT441400003700402320'
+      blockedText:
+        type: string
+        description: 'Blocked Text'
+        example: 'NEIN'
+      accountOfWardText:
+        type: string
+        description: 'Account Of Ward Text'
+        example: 'NEIN'
+      flagJoint:
+        type: string
+        description: 'Flag Joint'
+        example: 'Y'
+      
+  Account:
+    type: object
+    required:
+    - accountNumber
+    - bankCode
+    properties:
+      accountNumber:
+        description: 'Account Number'
+        type: string
+        format: string
+        maxLength: 11
+        example: '00000003030'
+      bankCode:
+        type: string
+        description: 'Bank Code'
+        format: string
+        maxLength: 5
+        example: '14000'  
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string

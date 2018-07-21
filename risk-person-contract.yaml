@@ -1,0 +1,1084 @@
+swagger: '2.0'
+info:
+  title: BAWAG MSA Risk Person REST API
+  description: This is a POC project for risk-person ! By configuring a rest service with hystrix and feign(ribbon included) and calling and external service running on multiple instances we prove the power of spring cloud integration ! Further integration with Spring Cloud auto-configuration and Eureka are added !
+  termsOfService: commons terms
+    Every response is contained by an envelope. That is, each response has a
+    predictable set of keys with which you can expect to interact
+  version: "1.0.0"
+
+################################################################################
+#                  Host, Base Path, Schemes and Content Types                  #
+################################################################################
+host: api.bawagpsk.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /msa/
+produces:
+  - application/json
+################################################################################
+#                                   Parameters[path]                           #
+################################################################################
+parameters:
+  reason:
+    name: reason
+    in: path
+    description: 'reason for ZMR - request. '
+    type: integer
+    format: int32
+    required: true
+################################################################################
+#                                           Paths                              #
+################################################################################
+paths:
+  /AISP/authenticationInfo/{IBAN}:
+    get:
+      summary: Risk-person AISP Authentication Info
+      parameters:
+      - in: path
+        name: IBAN
+        type: string
+        required: true
+        description: Get Authentication Info via AISP
+      operationId: getExternalAuthenticationData
+      tags:
+      - External Authentication Info
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/GetAuthenticationInfoResponse'
+        '404':
+          description: External Authentication Information not found for a requested iban
+        default:
+          description: Unexpected error
+  /AISP/externalhouseholddata:
+    post:
+      summary: Risk-person External Household Data
+      operationId: getExternalHouseholdData
+      tags:
+      - ExternalHouseholdData
+      description: Get External Household Data via AISP
+      parameters:
+      - name: wsRequest
+        in: body
+        description: Create External Household Data Request
+        required: true
+        schema:
+          $ref: '#/definitions/GetExternalHouseholdDataRequest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/GetExternalHouseholdDataResponse'
+        '400':
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        '404':
+          description: External HouseholdData not found for requested iban
+        '510':
+          description: Challenge Response for Two-Factor Auth Required
+        '422':
+          description: AISP Bank Server error
+        default:
+          description: Unexpected error
+  /external-warnings:
+    get:
+      operationId: getPersonExternalWarnings
+      tags:
+      - PersonExternalWarnings
+      summary: >
+        The UKV list is the list of bank-wide "Unwanted Loans". The official name is "External Warning List".
+        It includes those customers who are reported by the different banks to the KSV in the course of loan defaults and resulting debt collection / ads.
+        The KSV makes these entries weekly available to all banks (so that the banks can enrich their respective customer data with this information).
+      description: P056 call with option 'N'
+      produces:
+      - application/json
+      parameters:
+      - name: surname
+        in: query
+        description: Surname of the person
+        required: true
+        type: string
+        format: string
+        maxLength: 30
+      - name: firstName
+        in: query
+        description: First name of the person
+        required: false
+        type: string
+        format: string
+        maxLength: 30
+      - name: process
+        in: query
+        description: Process key for workflow (to fill with ACOT for workflows Giro,Spar,Termineinlage)
+        required: false
+        type: string
+        format: string
+      - name: birthDate
+        in: query
+        description: Birth date of the person
+        required: false
+        type: string
+        format: date
+      - name: account
+        in: query
+        description: Account Number of the person
+        type: string
+        minLength: 1
+        required: false
+      responses:
+        200:
+          description: Get Person Extended Warning List Response
+          schema:
+            $ref: '#/definitions/GetPersonExternalWarningsResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Account not found
+        500:
+          description: Business or technical error - See x-bawagpsk-errors header for detailed information
+  /householdcalculationCheck:
+    post:
+      summary: Risk-person data
+      description: "Input (manual and optional AISP calculation)\nCall to GrantingRules\
+        \ Service as well as AttachableIncome Service  \nOutput migrated calculation\n"
+      parameters:
+      - name: wsRequest
+        in: body
+        description: HouseholdCalculationCheck Request
+        required: true
+        schema:
+          $ref: '#/definitions/HouseholdCalculationCheck'
+      operationId: perfomHouseholdCheck
+      tags:
+      - Household Calculation Checks
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/HouseholdCalculationCheckResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Account not found
+        default:
+          description: Unexpected error
+  /attachable-income:
+    post:
+      summary: Attachable Income retreival
+      description: |
+        Migrated from MCA
+        Retrieves the Attachable Income based on the given income of the customer
+      parameters:
+      - name: wsRequest
+        in: body
+        description: Get Attachable Income Request
+        required: true
+        schema:
+          $ref: '#/definitions/GetAttachableIncomeRequest'
+      operationId: getAttachableIncome
+      tags:
+      - Attachable Income
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/GetAttachableIncomeResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Account not found
+        default:
+          description: Unexpected error
+  /granting-guidelines-correction:
+    post:
+      summary: Granting Gudielines Correction
+      description: |
+        Migrated from MCA
+        Computes Available Income and Expenses based on the given data of the customer
+      parameters:
+      - name: wsRequest
+        in: body
+        description: Granting Guidelines Correction Request
+        required: true
+        schema:
+          $ref: '#/definitions/GrantingGuidelinesCorrectionRequest'
+      operationId: grantingGuidelinesCorrection
+      tags:
+      - Granting Guidelines Correction
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/GrantingGuidelinesCorrectionResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Account not found
+        default:
+          description: Unexpected error
+  /customers/{customerEntity}-{customerNumber}/behaviouralscoring:
+    get:
+      summary: Risk-person data
+      description: |
+        Call PB90
+      parameters:
+      - name: customerEntity
+        in: path
+        description: Customer Entity
+        required: true
+        type: string
+        maxLength: 4
+      - name: customerNumber
+        in: path
+        description: Customer Number
+        required: true
+        type: string
+        maxLength: 8
+      operationId: getBehavioralScoring
+      tags:
+      - Behavioural Scoring
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/GetBehaviouralScoringResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Account not found
+        default:
+          description: Unexpected error
+  /addresscheck:
+    get:
+      operationId: getAddressCheck
+      tags:
+      - Address Checks
+      summary: CRIF address check without hitlist
+      description: 'Validates the address of the passed person, with at least: fist
+        name, lastname, birthdate and address data. Optional correlation ID can be
+        sent to assign a response to a request. Fields with the prefix user will be
+        used to identify which client calls the endpoint, therefore the GPR process
+        for example can be passed to track from which channel costs (for queries)
+        are created. Input parameters with the prefix private refer to the person
+        to be checked.'
+      parameters:
+      - name: userId
+        in: query
+        required: false
+        type: string
+      - name: userName
+        in: query
+        required: false
+        type: string
+      - name: userFirstName
+        in: query
+        required: false
+        type: string
+      - name: userOrgUnit
+        in: query
+        required: false
+        type: string
+      - name: userCostCenter
+        in: query
+        required: false
+        type: string
+      - name: userEMail
+        in: query
+        required: false
+        type: string
+      - name: privateName
+        in: query
+        required: true
+        type: string
+      - name: privateMaidenName
+        in: query
+        required: false
+        type: string
+      - name: privateFirstName
+        in: query
+        required: true
+        type: string
+      - name: privateBirthDate
+        in: query
+        required: true
+        type: string
+        format: date
+      - name: privateSex
+        in: query
+        required: false
+        type: string
+      - name: privateNationality
+        in: query
+        required: false
+        type: string
+      - name: privateStreet
+        in: query
+        required: true
+        type: string
+      - name: privateHouseNumber
+        in: query
+        required: true
+        type: string
+      - name: privateZIP
+        in: query
+        required: true
+        type: string
+      - name: privateCity
+        in: query
+        required: true
+        type: string
+      - name: privateCountryCode
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: response body with unique identification
+          schema:
+            $ref: '#/definitions/GetAddressCheckResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Search criterias do not match any candidate in the CRIF database and no hitlist was requested
+          schema:
+            $ref: '#/definitions/GetAddressCheckNoHitResponse'
+        500:
+          description: Business or technical error - See x-bawagpsk-errors header for detailed information
+  /addresscheck/zmr/{reason}:
+    get:
+      operationId: getAddressCheckWithZMR
+      tags:
+      - Address Checks
+      summary: ZMR Address check
+      description: An adress check by ZMR. This request consists of a CRIF request with an additional reason field.
+      parameters:
+      - name: userId
+        in: query
+        required: false
+        type: string
+      - name: userName
+        in: query
+        required: false
+        type: string
+      - name: userFirstName
+        in: query
+        required: false
+        type: string
+      - name: userOrgUnit
+        in: query
+        required: false
+        type: string
+      - name: userCostCenter
+        in: query
+        required: false
+        type: string
+      - name: userEMail
+        in: query
+        required: false
+        type: string
+      - name: privateName
+        in: query
+        required: true
+        type: string
+      - name: privateMaidenName
+        in: query
+        required: false
+        type: string
+      - name: privateFirstName
+        in: query
+        required: true
+        type: string
+      - name: privateBirthDate
+        in: query
+        required: true
+        type: string
+        format: date
+      - name: privateSex
+        in: query
+        required: false
+        type: string
+      - name: privateNationality
+        in: query
+        required: false
+        type: string
+      - name: privateStreet
+        in: query
+        required: true
+        type: string
+      - name: privateHouseNumber
+        in: query
+        required: true
+        type: string
+      - name: privateZIP
+        in: query
+        required: true
+        type: string
+      - name: privateCity
+        in: query
+        required: true
+        type: string
+      - name: privateCountryCode
+        in: query
+        required: true
+        type: string
+      - $ref: '#/parameters/reason'
+      responses:
+        200:
+          description: response body with unique identification
+          schema:
+            $ref: '#/definitions/GetAddressCheckZMRResponse'
+        400:
+          description: Application error - Verify the BAWAG specific headers for detailed information
+        404:
+          description: Search criterias do not match any candidate in the CRIF ZMR database and no hitlist was requested
+          schema:
+            $ref: '#/definitions/GetAddressCheckNoHitResponse'
+        500:
+          description: Business or technical error - See x-bawagpsk-errors header for detailed information
+definitions:
+  GetAuthenticationInfoResponse:
+    type: object
+    properties:
+      userId:
+        type: string
+      userPin:
+        type: string
+      customerId:
+        type: string
+  GetExternalHouseholdDataRequest:
+    type: object
+    required:
+    - userId
+    - userPin
+    - iban
+    properties:
+      userId:
+        type: string
+        description: Disposer number
+        example: 1234567
+      userPin:
+        type: string
+        description: PIN (Password)
+      customerId:
+        type: string
+        description: secondary login field
+        example: birth date
+      iban:
+        type: string
+        description: Account IBAN
+        example: AT231420020012596430
+      challengeResponse:
+        type: string
+        description: 2 factor Auth field
+        example: SMS Tan
+  GetExternalHouseholdDataResponse:
+    type: object
+    properties:
+      personHouseholdCalculation:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      challengeResponseMessage:
+        type: string
+      hasDistraints:
+        type: boolean
+      bankCode:
+        type: string
+  PersonExtendedWarning:
+    type: object
+    properties:
+      reasonCodeExtern:
+        type: string
+        maxLength: 3
+        description: 'GAG: EXTERN'
+        example: '100'
+      reasonCodeIntern:
+        type: string
+        maxLength: 3
+        description: 'GAG: INTERN'
+        example: '100'
+      identNumber:
+        type: string
+        maxLength: 9
+        description: 'GAG: IDENT'
+        example: '123456789'
+      bankCode:
+        type: string
+        maxLength: 5
+        description: 'GAG: BANK'
+        example: ''
+      messageDate:
+        type: string
+        format: date
+        maxLength: 6
+        description: 'GAG: MESSAGE'
+        example: '201712'
+      comment:
+        type: string
+        maxLength: 35
+        description: 'GAG: COMMENT'
+        example: '001'
+      redemptionAgreementCode:
+        type: string
+        maxLength: 1
+        description: 'GAG: REDAGR'
+        example: ''
+      redemptionAgreementDate:
+        type: string
+        format: date
+        maxLength: 10
+        description: 'GAG: REDAGRD'
+        example: ''
+      redemptionCode:
+        type: string
+        maxLength: 1
+        description: 'GAG: RED'
+        example: ''
+      redemptionDate:
+        type: string
+        format: date
+        maxLength: 10
+        description: 'GAG: REDD'
+        example: ''
+      redemptionProcDate:
+        type: string
+        format: date
+        maxLength: 10
+        description: 'GAG: REDPD'
+        example: ''
+      contradicted:
+        type: string
+        maxLength: 1
+        description: 'GAG: CNTRFLG'
+        example: ''
+      contradictionDate:
+        type: string
+        format: date
+        maxLength: 10
+        description: 'GAG: CNTRD'
+        example: ''
+      accountNumber:
+        type: string
+        maxLength: 13
+        description: 'GAG: ACCOUNT'
+        example: ''
+      countryCode:
+        type: string
+        maxLength: 3
+        description: 'GAG: CTRYLIC'
+        example: '001'
+      zipCode:
+        type: string
+        maxLength: 7
+        description: 'GAG: ZIP'
+        example: '1080'
+      street:
+        type: string
+        maxLength: 35
+        description: 'GAG: STREET'
+        example: Elm Street
+      city:
+        type: string
+        maxLength: 35
+        description: 'GAG: CITY'
+        example: Lipa
+      firstName:
+        type: string
+        maxLength: 30
+        description: 'GAG: NAME'
+        example: Sam
+      surName:
+        type: string
+        maxLength: 30
+        description: 'GAG: SURNAME'
+        example: Smith
+      birthDate:
+        type: string
+        format: date
+        maxLength: 16
+        description: 'GAG: DAYBRTH'
+        example: '1995-01-01'
+      redemptionDescription:
+        type: string
+        maxLength: 16
+        description: 'GAG: REDESC'
+        example: Description
+      redemptionAgreed:
+        type: string
+        description: 'GAG: AGRDESC'
+        example: Agreed
+      defrayal:
+        type: string
+        description: 'GAG: CNTRDESC'
+        example: Defray
+      customerRelation:
+        type: string
+        maxLength: 8
+        description: 'GAG: CUSREL'
+        example: ''
+      entityRelation:
+        type: string
+        maxLength: 4
+        description: 'GAG: ENTREL'
+        example: abcd
+      sequenceUkvRelation:
+        type: string
+        maxLength: 3
+        description: 'GAG: SEQREL'
+        example: '001'
+  GetPersonExternalWarningsResponse:
+    type: object
+    description: Get Person Extended Warning
+    properties:
+      personExtendedWarning:
+        description: Arraylist of PersonExtendedWarning
+        type: array
+        items:
+          $ref: '#/definitions/PersonExtendedWarning'
+  GetBehaviouralScoringRequest:
+    type: object
+    required:
+    - personKey
+    properties:
+      personKey:
+        $ref: '#/definitions/PersonKey'
+  GetBehaviouralScoringResponse:
+    type: object
+    properties:
+      balSheetDataRating:
+        type: string
+        description: BalanceSheetDataRating
+        example: 1238
+      balSheetDataDate:
+        type: string
+        format: date
+        description: The date for the transaction
+        example: '2017-09-07'
+  HouseholdCalculationCheck:
+    type: object
+    required:
+    - personHouseholdCalculation
+    properties:
+      personHouseholdCalculation:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      personHouseholdCalculationAISP:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      secondPersonHouseholdCalculation:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      secondPersonHouseholdCalculationAISP:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      grantingRulesParameters:
+        $ref: '#/definitions/GrantingRulesParameters'
+  HouseholdCalculationCheckResponse:
+    type: object
+    properties:
+      personHouseholdCalculation:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+      secondPersonHouseholdCalculation:
+        $ref: '#/definitions/PersonHouseholdCalculation'
+  PersonHouseholdCalculation:
+    type: object
+    properties:
+      netIncome:
+        $ref: '#/definitions/Amount'
+      isIncomeVerified:
+        type: boolean
+      loanInstallmentsOwn:
+        $ref: '#/definitions/Amount'
+      loanInstallmentsForeign:
+        $ref: '#/definitions/Amount'
+      livingExpenses:
+        $ref: '#/definitions/Amount'
+      residencyExpenses:
+        $ref: '#/definitions/Amount'
+      insuranceExpenses:
+        $ref: '#/definitions/Amount'
+      carExpenses:
+        $ref: '#/definitions/Amount'
+      telecommunicationExpenses:
+        $ref: '#/definitions/Amount'
+      isCarOwned:
+        type: boolean
+      alimentaryPersons:
+        type: number
+        description: Number of alimentary persons
+        example: 2
+      otherExpenses:
+        $ref: '#/definitions/Amount'
+      overallIncome:
+        $ref: '#/definitions/Amount'
+      overallExpenses:
+        $ref: '#/definitions/Amount'
+  GetAttachableIncomeRequest:
+    type: object
+    required:
+    - income
+    properties:
+      income:
+        $ref: '#/definitions/Amount'
+      spouseIncome:
+        $ref: '#/definitions/Amount'
+      numberOfDependentChildren:
+        type: integer
+        format: int32
+        example: 0
+  GetAttachableIncomeResponse:
+    type: object
+    properties:
+      attachableIncome:
+        $ref: '#/definitions/Amount'
+  GrantingGuidelinesCorrectionRequest:
+    allOf:
+    - $ref: '#/definitions/BaseHouseholdCalculation'
+    - type: object
+  GrantingGuidelinesCorrectionResponse:
+    allOf:
+    - $ref: '#/definitions/BaseHouseholdCalculation'
+    - type: object
+  BaseHouseholdCalculation:
+    type: object
+    description: Abstract class for Household Calculation
+    discriminator: subType
+    required:
+    - firstCustHouseholdCalculation
+    - grantingRulesParameters
+    properties:
+      firstCustHouseholdCalculation:
+        $ref: '#/definitions/HouseholdCalculation'
+      secondCustHouseholdCalculation:
+        $ref: '#/definitions/HouseholdCalculation'
+      firstCustMinValueModFactors:
+        $ref: '#/definitions/MinimumValueModificationFactors'
+      secondCustMinValueModFactors:
+        $ref: '#/definitions/MinimumValueModificationFactors'
+      grantingRulesParameters:
+        $ref: '#/definitions/GrantingRulesParameters'
+  HouseholdCalculation:
+    type: object
+    description: Household Calculation
+    properties:
+      netIncome:
+        $ref: '#/definitions/Amount'
+      familyAllowance:
+        $ref: '#/definitions/Amount'
+      additionalIncome:
+        $ref: '#/definitions/Amount'
+      additionalIncomeType:
+        type: string
+      livingCosts:
+        $ref: '#/definitions/Amount'
+      carCosts:
+        $ref: '#/definitions/Amount'
+      ownInstituteLoanInstallment:
+        $ref: '#/definitions/Amount'
+      externalInstituteLoanInstallment:
+        $ref: '#/definitions/Amount'
+      insuranceRate:
+        $ref: '#/definitions/Amount'
+      phoneAndTelevisionCosts:
+        $ref: '#/definitions/Amount'
+      housingCosts:
+        $ref: '#/definitions/Amount'
+      houseSavingsRate:
+        $ref: '#/definitions/Amount'
+      savingsRate:
+        $ref: '#/definitions/Amount'
+      otherSavingsRate:
+        $ref: '#/definitions/Amount'
+      leasingRate:
+        $ref: '#/definitions/Amount'
+      otherCosts:
+        $ref: '#/definitions/Amount'
+      overallIncome:
+        $ref: '#/definitions/Amount'
+      overallExpenses:
+        $ref: '#/definitions/Amount'
+      distrainableAmount:
+        $ref: '#/definitions/Amount'
+      ownHome:
+        type: boolean
+      incomePartner:
+        type: boolean
+      partnerNetIncome:
+        $ref: '#/definitions/Amount'
+      ownCar:
+        type: boolean
+      housingCostsProved:
+        type: boolean
+      distrainableNetIncome:
+        $ref: '#/definitions/Amount'
+  MinimumValueModificationFactors:
+    type: object
+    description: Minimum Value Modification Factors
+    properties:
+      livingCostsFactor:
+        type: number
+        example: 1000.0
+      carCostsFactor:
+        type: number
+        example: 1000.0
+      phoneAndTelevisionCostsFactor:
+        type: number
+        example: 1000.0
+      housingCostsFactor:
+        type: number
+        example: 1000.0
+  GrantingRulesParameters:
+    type: object
+    description: Granting Rules Parameters
+    properties:
+      customersShareHousehold:
+        type: boolean
+      numberOfPersonsInHousehold:
+        type: integer
+        format: int32
+      married:
+        type: boolean
+      numberOfDependentChildren:
+        type: integer
+        format: int32
+  GetAddressCheckRequest:
+    type: object
+    properties:
+      userId:
+        type: string
+        maxLength: 100
+      userName:
+        type: string
+        maxLength: 30
+      userFirstName:
+        type: string
+        maxLength: 30
+      userOrgUnit:
+        type: string
+        maxLength: 50
+      userCostCenter:
+        type: string
+        maxLength: 50
+      userEMail:
+        type: string
+        maxLength: 100
+      privateName:
+        type: string
+        maxLength: 255
+      privateMaidenName:
+        type: string
+        maxLength: 255
+      privateFirstName:
+        type: string
+        maxLength: 200
+      privateBirthDate:
+        type: string
+        format: date
+        description: The date for the birthdate
+        example: '2017-09-07'
+      privateSex:
+        type: string
+        maxLength: 255
+      privateNationality:
+        type: string
+        maxLength: 255
+      privateStreet:
+        type: string
+        maxLength: 200
+      privateHouseNumber:
+        type: string
+        maxLength: 50
+      privateZIP:
+        type: string
+        maxLength: 12
+      privateCity:
+        type: string
+        maxLength: 200
+      privateCountryCode:
+        type: string
+        maxLength: 255
+      reason:
+        type: integer
+        format: int32
+  GetAddressCheckResponse:
+    type: object
+    properties:
+      correlationId:
+        type: string
+        maxLength: 255
+        description: The content of this field can be found in a response, to enable explicit assignment a response to a request. This ID will be a UUID (Universally Unique Identifier)
+        example: '123456'
+      decision:
+        $ref: '#/definitions/EnumProperty'
+      bestHit:
+        $ref: '#/definitions/PersonPrivate'
+      status:
+        $ref: '#/definitions/EnumProperty'
+        description: 'possible values: V - adult, M - minor, T - deceased, U - unknown'
+  GetAddressCheckNoHitResponse:
+    type: object
+    properties:
+      correlationId:
+        type: string
+        maxLength: 255
+        description: The content of this field can be found in a response, to enable explicit assignment a response to a request. This ID will be a UUID (Universally Unique Identifier)
+        example: '123456'
+      decision:
+        $ref: '#/definitions/EnumProperty'
+  GetAddressCheckZMRResponse:
+    type: object
+    properties:
+      correlationId:
+        type: string
+        description: The content of this field can be found in a response, to enable explicit assignment a response to a request. This ID will be a UUID (Universally Unique Identifier)
+        example: '123456'
+      decision:
+        type: boolean
+        example: true
+      foundPerson:
+        $ref: '#/definitions/FoundPersonZMR'
+  PersonPrivate:
+    type: object
+    description: Person to be checked. To identify a person the selectedAddressID, the crifId, name birthdate and address need to be passed
+    required:
+    - name
+    - maidenName
+    - firstName
+    - birthDate
+    - street
+    - houseNumber
+    - city
+    - zip
+    - countryCode
+    properties:
+      name:
+        type: string
+        maxLength: 255
+        description: last name of person to be checked
+        example: lastname
+      maidenName:
+        type: string
+        maxLength: 255
+        description: maiden name of the person to be checked
+        example: maidenname
+      firstName:
+        type: string
+        maxLength: 255
+        description: first name of the person to be checked
+        example: first name
+      birthDate:
+        type: string
+        format: date
+        description: The date for the birthdate
+        example: '2017-09-07'
+      sex:
+        $ref: '#/definitions/EnumProperty'
+        description: sex of the user (M/F)
+      nationality:
+        description: nationality (country code - 2-Char ISO-3166 Alpha-2 Code)
+        $ref: '#/definitions/EnumProperty'
+      street:
+        type: string
+        maxLength: 200
+        description: street name. If not applicable a place name or number can be passed. Housenumber can be passed after a blank space
+        example: somestreet
+      houseNumber:
+        type: string
+        maxLength: 50
+        description: house number. Further details suchas doornumber will be ignored
+        example: '3'
+      zip:
+        type: string
+        maxLength: 12
+        description: postal code
+        example: '1150'
+      city:
+        type: string
+        maxLength: 60
+        description: city / place
+        example: vienna
+      country:
+        description: country (country code - 2-Char ISO-3166 Alpha-2 Code)
+        $ref: '#/definitions/EnumProperty'
+  FoundPersonZMR:
+    type: object
+    description: person found by ZMR
+    properties:
+      firstName:
+        type: string
+        maxLength: 255
+        description: first name of person to be checked
+        example: first name
+      name:
+        type: string
+        maxLength: 255
+        description: last name of person to be checked
+        example: last name
+      birthDate:
+        type: string
+        format: date
+        description: The date for the birthdate
+        example: '2017-09-07'
+      zip:
+        type: string
+        maxLength: 255
+        description: postal code of person to be checked
+        example: zip code
+      city:
+        type: string
+        maxLength: 255
+        description: city of person to be checked
+        example: city
+      street:
+        type: string
+        maxLength: 255
+        description: street of person to be checked
+        example: street
+      houseNumber:
+        type: string
+        maxLength: 255
+        description: house number of person to be checked
+        example: house number
+      topNumber:
+        type: string
+        maxLength: 255
+        description: house number of person to be checked
+        example: house number
+      isLocationCurrent:
+        type: boolean
+        description: defines if this is the current location of the found person
+        example: true
+  Amount:
+    type: object
+    description: Amount object
+    required:
+    - currency
+    - amount
+    properties:
+      currency:
+        type: string
+        description: 3 character currency
+        example: EUR
+      amount:
+        type: number
+        description: actual amount
+        example: 1000.0
+  PersonKey:
+    type: object
+    description: PersonKey
+    required:
+    - entity
+    - customerNumber
+    properties:
+      entity:
+        type: string
+        description: Entity for PersonKey
+      customerNumber:
+        type: string
+        description: CustomerNumber for PersonKey
+  EnumProperty:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Enum Code
+      description:
+        type: string
+        description: Enum Description
