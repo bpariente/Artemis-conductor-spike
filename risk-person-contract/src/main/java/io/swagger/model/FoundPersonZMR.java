@@ -1,11 +1,11 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -25,7 +25,7 @@ public class FoundPersonZMR   {
   private String name = null;
 
   @JsonProperty("birthDate")
-  private LocalDate birthDate = null;
+  private Date birthDate = null;
 
   @JsonProperty("zip")
   private String zip = null;
@@ -85,7 +85,7 @@ public class FoundPersonZMR   {
     this.name = name;
   }
 
-  public FoundPersonZMR birthDate(LocalDate birthDate) {
+  public FoundPersonZMR birthDate(Date birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -98,11 +98,11 @@ public class FoundPersonZMR   {
 
   @Valid
 
-  public LocalDate getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
+  public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
   }
 

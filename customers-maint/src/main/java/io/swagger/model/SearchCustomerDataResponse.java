@@ -32,6 +32,12 @@ public class SearchCustomerDataResponse   {
   @JsonProperty("time")
   private String time = null;
 
+  public SearchCustomerDataResponse(String currentDate, String userId, String time) {
+    this.currentDate = currentDate;
+    this.userId = userId;
+    this.time = time;
+  }
+
   public SearchCustomerDataResponse persons(List<PersonShortInfo> persons) {
     this.persons = persons;
     return this;

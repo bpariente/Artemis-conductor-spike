@@ -42,14 +42,14 @@ public class AttachableIncomeApiController implements AttachableIncomeApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GetAttachableIncomeResponse>(objectMapper.readValue("{  \"attachableIncome\" : {    \"amount\" : 1000.0,    \"currency\" : \"EUR\"  }}", GetAttachableIncomeResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GetAttachableIncomeResponse>(objectMapper.readValue("{  \"attachableIncome\" : {    \"amount\" : 1000.0,    \"currency\" : \"EUR\"  }}", GetAttachableIncomeResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GetAttachableIncomeResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GetAttachableIncomeResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GetAttachableIncomeResponse>(HttpStatus.OK);
     }
 
 }

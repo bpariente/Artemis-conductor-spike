@@ -1,11 +1,11 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -30,7 +30,7 @@ public class PersonExtendedWarning   {
   private String bankCode = null;
 
   @JsonProperty("messageDate")
-  private LocalDate messageDate = null;
+  private Date messageDate = null;
 
   @JsonProperty("comment")
   private String comment = null;
@@ -39,22 +39,22 @@ public class PersonExtendedWarning   {
   private String redemptionAgreementCode = null;
 
   @JsonProperty("redemptionAgreementDate")
-  private LocalDate redemptionAgreementDate = null;
+  private Date redemptionAgreementDate = null;
 
   @JsonProperty("redemptionCode")
   private String redemptionCode = null;
 
   @JsonProperty("redemptionDate")
-  private LocalDate redemptionDate = null;
+  private Date redemptionDate = null;
 
   @JsonProperty("redemptionProcDate")
-  private LocalDate redemptionProcDate = null;
+  private Date redemptionProcDate = null;
 
   @JsonProperty("contradicted")
   private String contradicted = null;
 
   @JsonProperty("contradictionDate")
-  private LocalDate contradictionDate = null;
+  private Date contradictionDate = null;
 
   @JsonProperty("accountNumber")
   private String accountNumber = null;
@@ -78,7 +78,7 @@ public class PersonExtendedWarning   {
   private String surName = null;
 
   @JsonProperty("birthDate")
-  private LocalDate birthDate = null;
+  private Date birthDate = null;
 
   @JsonProperty("redemptionDescription")
   private String redemptionDescription = null;
@@ -178,7 +178,7 @@ public class PersonExtendedWarning   {
     this.bankCode = bankCode;
   }
 
-  public PersonExtendedWarning messageDate(LocalDate messageDate) {
+  public PersonExtendedWarning messageDate(Date messageDate) {
     this.messageDate = messageDate;
     return this;
   }
@@ -191,11 +191,11 @@ public class PersonExtendedWarning   {
 
   @Valid
 
-  public LocalDate getMessageDate() {
+  public Date getMessageDate() {
     return messageDate;
   }
 
-  public void setMessageDate(LocalDate messageDate) {
+  public void setMessageDate(Date messageDate) {
     this.messageDate = messageDate;
   }
 
@@ -239,7 +239,7 @@ public class PersonExtendedWarning   {
     this.redemptionAgreementCode = redemptionAgreementCode;
   }
 
-  public PersonExtendedWarning redemptionAgreementDate(LocalDate redemptionAgreementDate) {
+  public PersonExtendedWarning redemptionAgreementDate(Date redemptionAgreementDate) {
     this.redemptionAgreementDate = redemptionAgreementDate;
     return this;
   }
@@ -252,11 +252,11 @@ public class PersonExtendedWarning   {
 
   @Valid
 
-  public LocalDate getRedemptionAgreementDate() {
+  public Date getRedemptionAgreementDate() {
     return redemptionAgreementDate;
   }
 
-  public void setRedemptionAgreementDate(LocalDate redemptionAgreementDate) {
+  public void setRedemptionAgreementDate(Date redemptionAgreementDate) {
     this.redemptionAgreementDate = redemptionAgreementDate;
   }
 
@@ -280,7 +280,7 @@ public class PersonExtendedWarning   {
     this.redemptionCode = redemptionCode;
   }
 
-  public PersonExtendedWarning redemptionDate(LocalDate redemptionDate) {
+  public PersonExtendedWarning redemptionDate(Date redemptionDate) {
     this.redemptionDate = redemptionDate;
     return this;
   }
@@ -293,15 +293,15 @@ public class PersonExtendedWarning   {
 
   @Valid
 
-  public LocalDate getRedemptionDate() {
+  public Date getRedemptionDate() {
     return redemptionDate;
   }
 
-  public void setRedemptionDate(LocalDate redemptionDate) {
+  public void setRedemptionDate(Date redemptionDate) {
     this.redemptionDate = redemptionDate;
   }
 
-  public PersonExtendedWarning redemptionProcDate(LocalDate redemptionProcDate) {
+  public PersonExtendedWarning redemptionProcDate(Date redemptionProcDate) {
     this.redemptionProcDate = redemptionProcDate;
     return this;
   }
@@ -314,11 +314,11 @@ public class PersonExtendedWarning   {
 
   @Valid
 
-  public LocalDate getRedemptionProcDate() {
+  public Date getRedemptionProcDate() {
     return redemptionProcDate;
   }
 
-  public void setRedemptionProcDate(LocalDate redemptionProcDate) {
+  public void setRedemptionProcDate(Date redemptionProcDate) {
     this.redemptionProcDate = redemptionProcDate;
   }
 
@@ -342,7 +342,7 @@ public class PersonExtendedWarning   {
     this.contradicted = contradicted;
   }
 
-  public PersonExtendedWarning contradictionDate(LocalDate contradictionDate) {
+  public PersonExtendedWarning contradictionDate(Date contradictionDate) {
     this.contradictionDate = contradictionDate;
     return this;
   }
@@ -355,11 +355,11 @@ public class PersonExtendedWarning   {
 
   @Valid
 
-  public LocalDate getContradictionDate() {
+  public Date getContradictionDate() {
     return contradictionDate;
   }
 
-  public void setContradictionDate(LocalDate contradictionDate) {
+  public void setContradictionDate(Date contradictionDate) {
     this.contradictionDate = contradictionDate;
   }
 
@@ -503,7 +503,7 @@ public class PersonExtendedWarning   {
     this.surName = surName;
   }
 
-  public PersonExtendedWarning birthDate(LocalDate birthDate) {
+  public PersonExtendedWarning birthDate(Date birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -516,11 +516,11 @@ public class PersonExtendedWarning   {
 
   @Valid
 
-  public LocalDate getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
+  public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
   }
 

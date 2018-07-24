@@ -1,11 +1,11 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -69,10 +69,10 @@ public class GetCustomerAdditionalDataResponse   {
   private String uidNumber = null;
 
   @JsonProperty("lastReviewDate")
-  private LocalDate lastReviewDate = null;
+  private Date lastReviewDate = null;
 
   @JsonProperty("economicDocumentsObtainingDate")
-  private LocalDate economicDocumentsObtainingDate = null;
+  private Date economicDocumentsObtainingDate = null;
 
   public GetCustomerAdditionalDataResponse bookkeepingTypeCode(Integer bookkeepingTypeCode) {
     this.bookkeepingTypeCode = bookkeepingTypeCode;
@@ -414,7 +414,7 @@ public class GetCustomerAdditionalDataResponse   {
     this.uidNumber = uidNumber;
   }
 
-  public GetCustomerAdditionalDataResponse lastReviewDate(LocalDate lastReviewDate) {
+  public GetCustomerAdditionalDataResponse lastReviewDate(Date lastReviewDate) {
     this.lastReviewDate = lastReviewDate;
     return this;
   }
@@ -427,15 +427,15 @@ public class GetCustomerAdditionalDataResponse   {
 
   @Valid
 
-  public LocalDate getLastReviewDate() {
+  public Date getLastReviewDate() {
     return lastReviewDate;
   }
 
-  public void setLastReviewDate(LocalDate lastReviewDate) {
+  public void setLastReviewDate(Date lastReviewDate) {
     this.lastReviewDate = lastReviewDate;
   }
 
-  public GetCustomerAdditionalDataResponse economicDocumentsObtainingDate(LocalDate economicDocumentsObtainingDate) {
+  public GetCustomerAdditionalDataResponse economicDocumentsObtainingDate(Date economicDocumentsObtainingDate) {
     this.economicDocumentsObtainingDate = economicDocumentsObtainingDate;
     return this;
   }
@@ -448,11 +448,11 @@ public class GetCustomerAdditionalDataResponse   {
 
   @Valid
 
-  public LocalDate getEconomicDocumentsObtainingDate() {
+  public Date getEconomicDocumentsObtainingDate() {
     return economicDocumentsObtainingDate;
   }
 
-  public void setEconomicDocumentsObtainingDate(LocalDate economicDocumentsObtainingDate) {
+  public void setEconomicDocumentsObtainingDate(Date economicDocumentsObtainingDate) {
     this.economicDocumentsObtainingDate = economicDocumentsObtainingDate;
   }
 

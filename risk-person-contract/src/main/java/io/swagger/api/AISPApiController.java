@@ -43,28 +43,28 @@ public class AISPApiController implements AISPApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GetAuthenticationInfoResponse>(objectMapper.readValue("{  \"userPin\" : \"userPin\",  \"customerId\" : \"customerId\",  \"userId\" : \"userId\"}", GetAuthenticationInfoResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GetAuthenticationInfoResponse>(objectMapper.readValue("{  \"userPin\" : \"userPin\",  \"customerId\" : \"customerId\",  \"userId\" : \"userId\"}", GetAuthenticationInfoResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GetAuthenticationInfoResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GetAuthenticationInfoResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GetAuthenticationInfoResponse>(HttpStatus.OK);
     }
 
     public ResponseEntity<GetExternalHouseholdDataResponse> getExternalHouseholdData(@ApiParam(value = "Create External Household Data Request" ,required=true )  @Valid @RequestBody GetExternalHouseholdDataRequest wsRequest) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GetExternalHouseholdDataResponse>(objectMapper.readValue("{  \"challengeResponseMessage\" : \"challengeResponseMessage\",  \"bankCode\" : \"bankCode\",  \"personHouseholdCalculation\" : {    \"otherExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"overallExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"telecommunicationExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"overallIncome\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"insuranceExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"alimentaryPersons\" : 2.0,    \"isIncomeVerified\" : true,    \"livingExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"carExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"loanInstallmentsForeign\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"residencyExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"loanInstallmentsOwn\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"netIncome\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"isCarOwned\" : true  },  \"hasDistraints\" : true}", GetExternalHouseholdDataResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GetExternalHouseholdDataResponse>(objectMapper.readValue("{  \"challengeResponseMessage\" : \"challengeResponseMessage\",  \"bankCode\" : \"bankCode\",  \"personHouseholdCalculation\" : {    \"otherExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"overallExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"telecommunicationExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"overallIncome\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"insuranceExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"alimentaryPersons\" : 2.0,    \"isIncomeVerified\" : true,    \"livingExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"carExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"loanInstallmentsForeign\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"residencyExpenses\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"loanInstallmentsOwn\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"netIncome\" : {      \"amount\" : 1000.0,      \"currency\" : \"EUR\"    },    \"isCarOwned\" : true  },  \"hasDistraints\" : true}", GetExternalHouseholdDataResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GetExternalHouseholdDataResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GetExternalHouseholdDataResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GetExternalHouseholdDataResponse>(HttpStatus.OK);
     }
 
 }

@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -7,7 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.PersonKey;
 import java.math.BigDecimal;
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -69,7 +69,7 @@ public class Promotions   {
   private Integer specialConditionRuntime = null;
 
   @JsonProperty("specialConditionUntil")
-  private LocalDate specialConditionUntil = null;
+  private Date specialConditionUntil = null;
 
   @JsonProperty("specialFeePlanCode")
   private String specialFeePlanCode = null;
@@ -410,7 +410,7 @@ public class Promotions   {
     this.specialConditionRuntime = specialConditionRuntime;
   }
 
-  public Promotions specialConditionUntil(LocalDate specialConditionUntil) {
+  public Promotions specialConditionUntil(Date specialConditionUntil) {
     this.specialConditionUntil = specialConditionUntil;
     return this;
   }
@@ -423,11 +423,11 @@ public class Promotions   {
 
   @Valid
 
-  public LocalDate getSpecialConditionUntil() {
+  public Date getSpecialConditionUntil() {
     return specialConditionUntil;
   }
 
-  public void setSpecialConditionUntil(LocalDate specialConditionUntil) {
+  public void setSpecialConditionUntil(Date specialConditionUntil) {
     this.specialConditionUntil = specialConditionUntil;
   }
 

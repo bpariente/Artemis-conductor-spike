@@ -27,6 +27,11 @@ public class PersonKey   {
     return this;
   }
 
+  public PersonKey(String personNumber, String entity) {
+    this.personNumber = personNumber;
+    this.entity = entity;
+  }
+
   /**
    * Person Number
    * @return personNumber

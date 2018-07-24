@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -9,7 +10,6 @@ import io.swagger.model.BranchInformation;
 import io.swagger.model.EnumProperty;
 import io.swagger.model.ModificationInformation;
 import io.swagger.model.PersonIdentificationDocument;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -52,7 +52,7 @@ public class GetCustomerBasicDataResponse   {
   private String birthCountry = null;
 
   @JsonProperty("birthDate")
-  private LocalDate birthDate = null;
+  private Date birthDate = null;
 
   @JsonProperty("birthPlace")
   private String birthPlace = null;
@@ -70,7 +70,7 @@ public class GetCustomerBasicDataResponse   {
   private String cardName2Extended = null;
 
   @JsonProperty("citizenSince")
-  private LocalDate citizenSince = null;
+  private Date citizenSince = null;
 
   @JsonProperty("city")
   private String city = null;
@@ -112,7 +112,7 @@ public class GetCustomerBasicDataResponse   {
   private String leiCode = null;
 
   @JsonProperty("mainAddressChangeDate")
-  private LocalDate mainAddressChangeDate = null;
+  private Date mainAddressChangeDate = null;
 
   @JsonProperty("maritalStatus")
   private EnumProperty maritalStatus = null;
@@ -220,7 +220,7 @@ public class GetCustomerBasicDataResponse   {
   private Boolean deceased = null;
 
   @JsonProperty("firstEditDate")
-  private LocalDate firstEditDate = null;
+  private Date firstEditDate = null;
 
   @JsonProperty("identFlag")
   private Boolean identFlag = null;
@@ -235,7 +235,7 @@ public class GetCustomerBasicDataResponse   {
   private String stateText = null;
 
   @JsonProperty("stateDate")
-  private LocalDate stateDate = null;
+  private Date stateDate = null;
 
   @JsonProperty("transactionCode")
   private String transactionCode = null;
@@ -440,7 +440,7 @@ public class GetCustomerBasicDataResponse   {
     this.birthCountry = birthCountry;
   }
 
-  public GetCustomerBasicDataResponse birthDate(LocalDate birthDate) {
+  public GetCustomerBasicDataResponse birthDate(Date birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -453,11 +453,11 @@ public class GetCustomerBasicDataResponse   {
 
   @Valid
 
-  public LocalDate getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
+  public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
   }
 
@@ -561,7 +561,7 @@ public class GetCustomerBasicDataResponse   {
     this.cardName2Extended = cardName2Extended;
   }
 
-  public GetCustomerBasicDataResponse citizenSince(LocalDate citizenSince) {
+  public GetCustomerBasicDataResponse citizenSince(Date citizenSince) {
     this.citizenSince = citizenSince;
     return this;
   }
@@ -574,11 +574,11 @@ public class GetCustomerBasicDataResponse   {
 
   @Valid
 
-  public LocalDate getCitizenSince() {
+  public Date getCitizenSince() {
     return citizenSince;
   }
 
-  public void setCitizenSince(LocalDate citizenSince) {
+  public void setCitizenSince(Date citizenSince) {
     this.citizenSince = citizenSince;
   }
 
@@ -849,7 +849,7 @@ public class GetCustomerBasicDataResponse   {
     this.leiCode = leiCode;
   }
 
-  public GetCustomerBasicDataResponse mainAddressChangeDate(LocalDate mainAddressChangeDate) {
+  public GetCustomerBasicDataResponse mainAddressChangeDate(Date mainAddressChangeDate) {
     this.mainAddressChangeDate = mainAddressChangeDate;
     return this;
   }
@@ -862,11 +862,11 @@ public class GetCustomerBasicDataResponse   {
 
   @Valid
 
-  public LocalDate getMainAddressChangeDate() {
+  public Date getMainAddressChangeDate() {
     return mainAddressChangeDate;
   }
 
-  public void setMainAddressChangeDate(LocalDate mainAddressChangeDate) {
+  public void setMainAddressChangeDate(Date mainAddressChangeDate) {
     this.mainAddressChangeDate = mainAddressChangeDate;
   }
 
@@ -1583,7 +1583,7 @@ public class GetCustomerBasicDataResponse   {
     this.deceased = deceased;
   }
 
-  public GetCustomerBasicDataResponse firstEditDate(LocalDate firstEditDate) {
+  public GetCustomerBasicDataResponse firstEditDate(Date firstEditDate) {
     this.firstEditDate = firstEditDate;
     return this;
   }
@@ -1596,11 +1596,11 @@ public class GetCustomerBasicDataResponse   {
 
   @Valid
 
-  public LocalDate getFirstEditDate() {
+  public Date getFirstEditDate() {
     return firstEditDate;
   }
 
-  public void setFirstEditDate(LocalDate firstEditDate) {
+  public void setFirstEditDate(Date firstEditDate) {
     this.firstEditDate = firstEditDate;
   }
 
@@ -1686,7 +1686,7 @@ public class GetCustomerBasicDataResponse   {
     this.stateText = stateText;
   }
 
-  public GetCustomerBasicDataResponse stateDate(LocalDate stateDate) {
+  public GetCustomerBasicDataResponse stateDate(Date stateDate) {
     this.stateDate = stateDate;
     return this;
   }
@@ -1699,11 +1699,11 @@ public class GetCustomerBasicDataResponse   {
 
   @Valid
 
-  public LocalDate getStateDate() {
+  public Date getStateDate() {
     return stateDate;
   }
 
-  public void setStateDate(LocalDate stateDate) {
+  public void setStateDate(Date stateDate) {
     this.stateDate = stateDate;
   }
 

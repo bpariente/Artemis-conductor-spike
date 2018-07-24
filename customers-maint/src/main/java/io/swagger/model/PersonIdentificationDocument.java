@@ -1,11 +1,11 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -30,10 +30,10 @@ public class PersonIdentificationDocument   {
   private String number = null;
 
   @JsonProperty("issuingDate")
-  private LocalDate issuingDate = null;
+  private Date issuingDate = null;
 
   @JsonProperty("expirationDate")
-  private LocalDate expirationDate = null;
+  private Date expirationDate = null;
 
   @JsonProperty("comment")
   private String comment = null;
@@ -118,7 +118,7 @@ public class PersonIdentificationDocument   {
     this.number = number;
   }
 
-  public PersonIdentificationDocument issuingDate(LocalDate issuingDate) {
+  public PersonIdentificationDocument issuingDate(Date issuingDate) {
     this.issuingDate = issuingDate;
     return this;
   }
@@ -131,15 +131,15 @@ public class PersonIdentificationDocument   {
 
   @Valid
 
-  public LocalDate getIssuingDate() {
+  public Date getIssuingDate() {
     return issuingDate;
   }
 
-  public void setIssuingDate(LocalDate issuingDate) {
+  public void setIssuingDate(Date issuingDate) {
     this.issuingDate = issuingDate;
   }
 
-  public PersonIdentificationDocument expirationDate(LocalDate expirationDate) {
+  public PersonIdentificationDocument expirationDate(Date expirationDate) {
     this.expirationDate = expirationDate;
     return this;
   }
@@ -152,11 +152,11 @@ public class PersonIdentificationDocument   {
 
   @Valid
 
-  public LocalDate getExpirationDate() {
+  public Date getExpirationDate() {
     return expirationDate;
   }
 
-  public void setExpirationDate(LocalDate expirationDate) {
+  public void setExpirationDate(Date expirationDate) {
     this.expirationDate = expirationDate;
   }
 

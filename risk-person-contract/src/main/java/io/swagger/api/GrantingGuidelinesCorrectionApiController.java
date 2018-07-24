@@ -42,14 +42,14 @@ public class GrantingGuidelinesCorrectionApiController implements GrantingGuidel
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GrantingGuidelinesCorrectionResponse>(objectMapper.readValue("\"\"", GrantingGuidelinesCorrectionResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GrantingGuidelinesCorrectionResponse>(objectMapper.readValue("\"\"", GrantingGuidelinesCorrectionResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GrantingGuidelinesCorrectionResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GrantingGuidelinesCorrectionResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GrantingGuidelinesCorrectionResponse>(HttpStatus.OK);
     }
 
 }

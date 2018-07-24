@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -7,7 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.EnumProperty;
 import io.swagger.model.PersonIdentificationDocument;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -59,7 +59,7 @@ public class CreateLegalEntityRequest   {
   private String cardName2Extended = null;
 
   @JsonProperty("citizenSince")
-  private LocalDate citizenSince = null;
+  private Date citizenSince = null;
 
   @JsonProperty("city")
   private String city = null;
@@ -98,7 +98,7 @@ public class CreateLegalEntityRequest   {
   private String leiCode = null;
 
   @JsonProperty("mainAddressChangeDate")
-  private LocalDate mainAddressChangeDate = null;
+  private Date mainAddressChangeDate = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -426,7 +426,7 @@ public class CreateLegalEntityRequest   {
     this.cardName2Extended = cardName2Extended;
   }
 
-  public CreateLegalEntityRequest citizenSince(LocalDate citizenSince) {
+  public CreateLegalEntityRequest citizenSince(Date citizenSince) {
     this.citizenSince = citizenSince;
     return this;
   }
@@ -439,11 +439,11 @@ public class CreateLegalEntityRequest   {
 
   @Valid
 
-  public LocalDate getCitizenSince() {
+  public Date getCitizenSince() {
     return citizenSince;
   }
 
-  public void setCitizenSince(LocalDate citizenSince) {
+  public void setCitizenSince(Date citizenSince) {
     this.citizenSince = citizenSince;
   }
 
@@ -695,7 +695,7 @@ public class CreateLegalEntityRequest   {
     this.leiCode = leiCode;
   }
 
-  public CreateLegalEntityRequest mainAddressChangeDate(LocalDate mainAddressChangeDate) {
+  public CreateLegalEntityRequest mainAddressChangeDate(Date mainAddressChangeDate) {
     this.mainAddressChangeDate = mainAddressChangeDate;
     return this;
   }
@@ -708,11 +708,11 @@ public class CreateLegalEntityRequest   {
 
   @Valid
 
-  public LocalDate getMainAddressChangeDate() {
+  public Date getMainAddressChangeDate() {
     return mainAddressChangeDate;
   }
 
-  public void setMainAddressChangeDate(LocalDate mainAddressChangeDate) {
+  public void setMainAddressChangeDate(Date mainAddressChangeDate) {
     this.mainAddressChangeDate = mainAddressChangeDate;
   }
 

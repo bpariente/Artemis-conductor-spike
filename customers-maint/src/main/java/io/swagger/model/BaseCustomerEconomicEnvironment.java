@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -11,7 +12,7 @@ import io.swagger.model.DomesticAddress;
 import io.swagger.model.EnumProperty;
 import io.swagger.model.PersonKey;
 import java.math.BigDecimal;
-import org.threeten.bp.LocalDate;
+
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -29,7 +30,7 @@ import javax.validation.constraints.*;
 
 public class BaseCustomerEconomicEnvironment   {
   @JsonProperty("birthDate")
-  private LocalDate birthDate = null;
+  private Date birthDate = null;
 
   @JsonProperty("gender")
   private EnumProperty gender = null;
@@ -41,7 +42,7 @@ public class BaseCustomerEconomicEnvironment   {
   private EnumProperty status = null;
 
   @JsonProperty("statusDate")
-  private LocalDate statusDate = null;
+  private Date statusDate = null;
 
   @JsonProperty("spouseWithoutIncome")
   private Boolean spouseWithoutIncome = null;
@@ -53,7 +54,7 @@ public class BaseCustomerEconomicEnvironment   {
   private EnumProperty occupation = null;
 
   @JsonProperty("employmentStartDate")
-  private LocalDate employmentStartDate = null;
+  private Date employmentStartDate = null;
 
   @JsonProperty("education")
   private EnumProperty education = null;
@@ -77,7 +78,7 @@ public class BaseCustomerEconomicEnvironment   {
   private String residenceType = null;
 
   @JsonProperty("residenceStartDate")
-  private LocalDate residenceStartDate = null;
+  private Date residenceStartDate = null;
 
   @JsonProperty("residenceSize")
   private Integer residenceSize = null;
@@ -116,9 +117,9 @@ public class BaseCustomerEconomicEnvironment   {
   private Boolean sharedHousehold = null;
 
   @JsonProperty("employerDeletionDate")
-  private LocalDate employerDeletionDate = null;
+  private Date employerDeletionDate = null;
 
-  public BaseCustomerEconomicEnvironment birthDate(LocalDate birthDate) {
+  public BaseCustomerEconomicEnvironment birthDate(Date birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -132,11 +133,11 @@ public class BaseCustomerEconomicEnvironment   {
 
   @Valid
 
-  public LocalDate getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
+  public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
   }
 
@@ -206,7 +207,7 @@ public class BaseCustomerEconomicEnvironment   {
     this.status = status;
   }
 
-  public BaseCustomerEconomicEnvironment statusDate(LocalDate statusDate) {
+  public BaseCustomerEconomicEnvironment statusDate(Date statusDate) {
     this.statusDate = statusDate;
     return this;
   }
@@ -220,11 +221,11 @@ public class BaseCustomerEconomicEnvironment   {
 
   @Valid
 
-  public LocalDate getStatusDate() {
+  public Date getStatusDate() {
     return statusDate;
   }
 
-  public void setStatusDate(LocalDate statusDate) {
+  public void setStatusDate(Date statusDate) {
     this.statusDate = statusDate;
   }
 
@@ -289,7 +290,7 @@ public class BaseCustomerEconomicEnvironment   {
     this.occupation = occupation;
   }
 
-  public BaseCustomerEconomicEnvironment employmentStartDate(LocalDate employmentStartDate) {
+  public BaseCustomerEconomicEnvironment employmentStartDate(Date employmentStartDate) {
     this.employmentStartDate = employmentStartDate;
     return this;
   }
@@ -302,11 +303,11 @@ public class BaseCustomerEconomicEnvironment   {
 
   @Valid
 
-  public LocalDate getEmploymentStartDate() {
+  public Date getEmploymentStartDate() {
     return employmentStartDate;
   }
 
-  public void setEmploymentStartDate(LocalDate employmentStartDate) {
+  public void setEmploymentStartDate(Date employmentStartDate) {
     this.employmentStartDate = employmentStartDate;
   }
 
@@ -456,7 +457,7 @@ public class BaseCustomerEconomicEnvironment   {
     this.residenceType = residenceType;
   }
 
-  public BaseCustomerEconomicEnvironment residenceStartDate(LocalDate residenceStartDate) {
+  public BaseCustomerEconomicEnvironment residenceStartDate(Date residenceStartDate) {
     this.residenceStartDate = residenceStartDate;
     return this;
   }
@@ -469,11 +470,11 @@ public class BaseCustomerEconomicEnvironment   {
 
   @Valid
 
-  public LocalDate getResidenceStartDate() {
+  public Date getResidenceStartDate() {
     return residenceStartDate;
   }
 
-  public void setResidenceStartDate(LocalDate residenceStartDate) {
+  public void setResidenceStartDate(Date residenceStartDate) {
     this.residenceStartDate = residenceStartDate;
   }
 
@@ -725,7 +726,7 @@ public class BaseCustomerEconomicEnvironment   {
     this.sharedHousehold = sharedHousehold;
   }
 
-  public BaseCustomerEconomicEnvironment employerDeletionDate(LocalDate employerDeletionDate) {
+  public BaseCustomerEconomicEnvironment employerDeletionDate(Date employerDeletionDate) {
     this.employerDeletionDate = employerDeletionDate;
     return this;
   }
@@ -738,11 +739,11 @@ public class BaseCustomerEconomicEnvironment   {
 
   @Valid
 
-  public LocalDate getEmployerDeletionDate() {
+  public Date getEmployerDeletionDate() {
     return employerDeletionDate;
   }
 
-  public void setEmployerDeletionDate(LocalDate employerDeletionDate) {
+  public void setEmployerDeletionDate(Date employerDeletionDate) {
     this.employerDeletionDate = employerDeletionDate;
   }
 

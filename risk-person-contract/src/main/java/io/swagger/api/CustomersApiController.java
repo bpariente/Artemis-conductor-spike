@@ -41,14 +41,14 @@ public class CustomersApiController implements CustomersApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GetBehaviouralScoringResponse>(objectMapper.readValue("{  \"balSheetDataDate\" : \"2017-09-07\",  \"balSheetDataRating\" : \"1238\"}", GetBehaviouralScoringResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GetBehaviouralScoringResponse>(objectMapper.readValue("{  \"balSheetDataDate\" : \"2017-09-07\",  \"balSheetDataRating\" : \"1238\"}", GetBehaviouralScoringResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GetBehaviouralScoringResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GetBehaviouralScoringResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GetBehaviouralScoringResponse>(HttpStatus.OK);
     }
 
 }

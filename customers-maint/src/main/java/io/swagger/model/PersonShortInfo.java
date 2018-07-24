@@ -1,12 +1,12 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.PersonKey;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -25,7 +25,7 @@ public class PersonShortInfo   {
   private String name = null;
 
   @JsonProperty("birthDate")
-  private LocalDate birthDate = null;
+  private Date birthDate = null;
 
   @JsonProperty("identFlag")
   private String identFlag = null;
@@ -48,6 +48,19 @@ public class PersonShortInfo   {
   public PersonShortInfo personKey(PersonKey personKey) {
     this.personKey = personKey;
     return this;
+  }
+
+  public PersonShortInfo(PersonKey personKey, String name, String identFlag,
+      String address, String hints, String oenbId, String registerNumber,
+      Boolean naturalPerson) {
+    this.personKey = personKey;
+    this.name = name;
+    this.identFlag = identFlag;
+    this.address = address;
+    this.hints = hints;
+    this.oenbId = oenbId;
+    this.registerNumber = registerNumber;
+    this.naturalPerson = naturalPerson;
   }
 
   /**
@@ -86,7 +99,7 @@ public class PersonShortInfo   {
     this.name = name;
   }
 
-  public PersonShortInfo birthDate(LocalDate birthDate) {
+  public PersonShortInfo birthDate(Date birthDate) {
     this.birthDate = birthDate;
     return this;
   }
@@ -99,11 +112,11 @@ public class PersonShortInfo   {
 
   @Valid
 
-  public LocalDate getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
+  public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
   }
 

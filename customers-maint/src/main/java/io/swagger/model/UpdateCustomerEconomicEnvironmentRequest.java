@@ -10,7 +10,7 @@ import io.swagger.model.DomesticAddress;
 import io.swagger.model.EnumProperty;
 import io.swagger.model.PersonKey;
 import java.math.BigDecimal;
-import org.threeten.bp.LocalDate;
+
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;

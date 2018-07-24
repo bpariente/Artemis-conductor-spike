@@ -44,28 +44,28 @@ public class AddresscheckApiController implements AddresscheckApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GetAddressCheckResponse>(objectMapper.readValue("{  \"decision\" : {    \"code\" : \"code\",    \"description\" : \"description\"  },  \"bestHit\" : {    \"zip\" : \"1150\",    \"firstName\" : \"first name\",    \"country\" : {      \"code\" : \"code\",      \"description\" : \"description\"    },    \"nationality\" : {      \"code\" : \"code\",      \"description\" : \"description\"    },    \"city\" : \"vienna\",    \"street\" : \"somestreet\",    \"sex\" : {      \"code\" : \"code\",      \"description\" : \"description\"    },    \"name\" : \"lastname\",    \"houseNumber\" : \"3\",    \"maidenName\" : \"maidenname\",    \"birthDate\" : \"2017-09-07\"  },  \"correlationId\" : \"123456\",  \"status\" : {    \"code\" : \"code\",    \"description\" : \"description\"  }}", GetAddressCheckResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GetAddressCheckResponse>(objectMapper.readValue("{  \"decision\" : {    \"code\" : \"code\",    \"description\" : \"description\"  },  \"bestHit\" : {    \"zip\" : \"1150\",    \"firstName\" : \"first name\",    \"country\" : {      \"code\" : \"code\",      \"description\" : \"description\"    },    \"nationality\" : {      \"code\" : \"code\",      \"description\" : \"description\"    },    \"city\" : \"vienna\",    \"street\" : \"somestreet\",    \"sex\" : {      \"code\" : \"code\",      \"description\" : \"description\"    },    \"name\" : \"lastname\",    \"houseNumber\" : \"3\",    \"maidenName\" : \"maidenname\",    \"birthDate\" : \"2017-09-07\"  },  \"correlationId\" : \"123456\",  \"status\" : {    \"code\" : \"code\",    \"description\" : \"description\"  }}", GetAddressCheckResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GetAddressCheckResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GetAddressCheckResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GetAddressCheckResponse>(HttpStatus.OK);
     }
 
     public ResponseEntity<GetAddressCheckZMRResponse> getAddressCheckWithZMR(@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateName", required = true) String privateName,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateFirstName", required = true) String privateFirstName,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateBirthDate", required = true) LocalDate privateBirthDate,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateStreet", required = true) String privateStreet,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateHouseNumber", required = true) String privateHouseNumber,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateZIP", required = true) String privateZIP,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateCity", required = true) String privateCity,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "privateCountryCode", required = true) String privateCountryCode,@ApiParam(value = "reason for ZMR - request. ",required=true) @PathVariable("reason") Integer reason,@ApiParam(value = "") @Valid @RequestParam(value = "userId", required = false) String userId,@ApiParam(value = "") @Valid @RequestParam(value = "userName", required = false) String userName,@ApiParam(value = "") @Valid @RequestParam(value = "userFirstName", required = false) String userFirstName,@ApiParam(value = "") @Valid @RequestParam(value = "userOrgUnit", required = false) String userOrgUnit,@ApiParam(value = "") @Valid @RequestParam(value = "userCostCenter", required = false) String userCostCenter,@ApiParam(value = "") @Valid @RequestParam(value = "userEMail", required = false) String userEMail,@ApiParam(value = "") @Valid @RequestParam(value = "privateMaidenName", required = false) String privateMaidenName,@ApiParam(value = "") @Valid @RequestParam(value = "privateSex", required = false) String privateSex,@ApiParam(value = "") @Valid @RequestParam(value = "privateNationality", required = false) String privateNationality) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<GetAddressCheckZMRResponse>(objectMapper.readValue("{  \"foundPerson\" : {    \"zip\" : \"zip code\",    \"firstName\" : \"first name\",    \"topNumber\" : \"house number\",    \"isLocationCurrent\" : true,    \"city\" : \"city\",    \"street\" : \"street\",    \"name\" : \"last name\",    \"houseNumber\" : \"house number\",    \"birthDate\" : \"2017-09-07\"  },  \"decision\" : true,  \"correlationId\" : \"123456\"}", GetAddressCheckZMRResponse.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<GetAddressCheckZMRResponse>(objectMapper.readValue("{  \"foundPerson\" : {    \"zip\" : \"zip code\",    \"firstName\" : \"first name\",    \"topNumber\" : \"house number\",    \"isLocationCurrent\" : true,    \"city\" : \"city\",    \"street\" : \"street\",    \"name\" : \"last name\",    \"houseNumber\" : \"house number\",    \"birthDate\" : \"2017-09-07\"  },  \"decision\" : true,  \"correlationId\" : \"123456\"}", GetAddressCheckZMRResponse.class), HttpStatus.OK);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<GetAddressCheckZMRResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        return new ResponseEntity<GetAddressCheckZMRResponse>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<GetAddressCheckZMRResponse>(HttpStatus.OK);
     }
 
 }

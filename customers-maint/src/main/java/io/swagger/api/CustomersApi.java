@@ -19,13 +19,13 @@ import io.swagger.model.GetCustomerEconomicEnvironmentResponse;
 import io.swagger.model.GetCustomerExternalRelationTypeResponse;
 import io.swagger.model.GetCustomerHouseholdCalculationResponse;
 import io.swagger.model.GetCustomerPromotionCodesResponse;
-import org.threeten.bp.LocalDate;
 import io.swagger.model.SearchCustomerDataResponse;
 import io.swagger.model.UpdateCustomerBasicDataRequest;
 import io.swagger.model.UpdateCustomerContactDataRequest;
 import io.swagger.model.UpdateCustomerEconomicEnvironmentRequest;
 import io.swagger.model.UpdateCustomerHouseholdCalculationRequest;
 import io.swagger.annotations.*;
+import java.util.Date;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -131,7 +131,7 @@ public interface CustomersApi {
     @RequestMapping(value = "/customers",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<SearchCustomerDataResponse> findCustomers(@NotNull @ApiParam(value = "Customer Surname", required = true) @Valid @RequestParam(value = "name", required = true) String name,@ApiParam(value = "Customer First Name") @Valid @RequestParam(value = "firstName", required = false) String firstName,@ApiParam(value = "Customer Birthdate") @Valid @RequestParam(value = "birthDate", required = false) LocalDate birthDate,@ApiParam(value = "Customer Register Number") @Valid @RequestParam(value = "registerNumber", required = false) String registerNumber,@ApiParam(value = "Phonetic search flag") @Valid @RequestParam(value = "phoneticSearch", required = false) Boolean phoneticSearch,@ApiParam(value = "Postal Code") @Valid @RequestParam(value = "postalCode", required = false) String postalCode,@ApiParam(value = "Street") @Valid @RequestParam(value = "street", required = false) String street,@ApiParam(value = "OeNB Identification number") @Valid @RequestParam(value = "oenbId", required = false) String oenbId,@ApiParam(value = "1 Hostcall resembles 50 returned results") @Valid @RequestParam(value = "maxHostCalls", required = false) Integer maxHostCalls);
+    ResponseEntity<SearchCustomerDataResponse> findCustomers(@NotNull @ApiParam(value = "Customer Surname", required = true) @Valid @RequestParam(value = "name", required = true) String name,@ApiParam(value = "Customer First Name") @Valid @RequestParam(value = "firstName", required = false) String firstName,@ApiParam(value = "Customer Birthdate") @Valid @RequestParam(value = "birthDate", required = false) Date birthDate,@ApiParam(value = "Customer Register Number") @Valid @RequestParam(value = "registerNumber", required = false) String registerNumber,@ApiParam(value = "Phonetic search flag") @Valid @RequestParam(value = "phoneticSearch", required = false) Boolean phoneticSearch,@ApiParam(value = "Postal Code") @Valid @RequestParam(value = "postalCode", required = false) String postalCode,@ApiParam(value = "Street") @Valid @RequestParam(value = "street", required = false) String street,@ApiParam(value = "OeNB Identification number") @Valid @RequestParam(value = "oenbId", required = false) String oenbId,@ApiParam(value = "1 Hostcall resembles 50 returned results") @Valid @RequestParam(value = "maxHostCalls", required = false) Integer maxHostCalls);
 
 
     @ApiOperation(value = "Retrieve Customer Additional Data", nickname = "getCustomerAdditionalData", notes = "", response = GetCustomerAdditionalDataResponse.class, tags={ "CustomerAdditionalData", })

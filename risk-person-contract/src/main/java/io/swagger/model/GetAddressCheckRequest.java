@@ -1,11 +1,11 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -45,7 +45,7 @@ public class GetAddressCheckRequest   {
   private String privateFirstName = null;
 
   @JsonProperty("privateBirthDate")
-  private LocalDate privateBirthDate = null;
+  private Date privateBirthDate = null;
 
   @JsonProperty("privateSex")
   private String privateSex = null;
@@ -251,7 +251,7 @@ public class GetAddressCheckRequest   {
     this.privateFirstName = privateFirstName;
   }
 
-  public GetAddressCheckRequest privateBirthDate(LocalDate privateBirthDate) {
+  public GetAddressCheckRequest privateBirthDate(Date privateBirthDate) {
     this.privateBirthDate = privateBirthDate;
     return this;
   }
@@ -264,11 +264,11 @@ public class GetAddressCheckRequest   {
 
   @Valid
 
-  public LocalDate getPrivateBirthDate() {
+  public Date getPrivateBirthDate() {
     return privateBirthDate;
   }
 
-  public void setPrivateBirthDate(LocalDate privateBirthDate) {
+  public void setPrivateBirthDate(Date privateBirthDate) {
     this.privateBirthDate = privateBirthDate;
   }
 

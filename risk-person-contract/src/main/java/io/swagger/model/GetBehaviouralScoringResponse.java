@@ -1,11 +1,11 @@
 package io.swagger.model;
 
+import java.util.Date;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -21,7 +21,7 @@ public class GetBehaviouralScoringResponse   {
   private String balSheetDataRating = null;
 
   @JsonProperty("balSheetDataDate")
-  private LocalDate balSheetDataDate = null;
+  private Date balSheetDataDate = null;
 
   public GetBehaviouralScoringResponse balSheetDataRating(String balSheetDataRating) {
     this.balSheetDataRating = balSheetDataRating;
@@ -43,7 +43,7 @@ public class GetBehaviouralScoringResponse   {
     this.balSheetDataRating = balSheetDataRating;
   }
 
-  public GetBehaviouralScoringResponse balSheetDataDate(LocalDate balSheetDataDate) {
+  public GetBehaviouralScoringResponse balSheetDataDate(Date balSheetDataDate) {
     this.balSheetDataDate = balSheetDataDate;
     return this;
   }
@@ -56,11 +56,11 @@ public class GetBehaviouralScoringResponse   {
 
   @Valid
 
-  public LocalDate getBalSheetDataDate() {
+  public Date getBalSheetDataDate() {
     return balSheetDataDate;
   }
 
-  public void setBalSheetDataDate(LocalDate balSheetDataDate) {
+  public void setBalSheetDataDate(Date balSheetDataDate) {
     this.balSheetDataDate = balSheetDataDate;
   }
 
